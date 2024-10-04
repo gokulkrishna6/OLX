@@ -1,0 +1,1082 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+    <title>Hello</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    :root {
+        --primaryTextColor: #dcf4ff;
+        --bg: #000000;
+        --nav: #000000;
+        --darkNavBg: #000000;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+    }
+
+
+
+    .nav-bar {
+        width: 100%;
+        height: 70px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--nav);
+        padding: 2px 25px;
+        display: flex;
+        align-items: center;
+        z-index: 99;
+    }
+
+    .nav-bar .toggle-menu {
+        width: 26px;
+        height: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .toggle-menu span {
+        width: 18px;
+        height: 2px;
+        background-color: var(--primaryTextColor);
+        margin: 2px;
+    }
+
+
+    .side-menu {
+        width: 0;
+        height: calc(100% - 33px);
+        border-right: 0px solid transparent;
+        overflow: hidden;
+        top: 40px;
+        left: 0;
+        padding-top: 15px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        overscroll-behavior: contain;
+        overflow-y: auto;
+        padding-bottom: 20px;
+        top: 60px;
+        z-index: 9999999;
+    }
+
+    .side-menu.resize {
+        width: 250px;
+        border-right: 2px solid var(--primaryColor);
+        background-color: var(--darkNavBg);
+    }
+
+    .side-menu .menu-items {
+        padding: 0px 15px;
+    }
+
+    .side-menu a {
+        position: relative;
+        text-decoration: none;
+        color: var(--secondaryTextColor);
+        width: 100%;
+        height: 35px;
+        margin-top: 2px;
+        padding: 10px 20px;
+        border-radius: 35px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+    }
+
+    .side-menu a::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 0%;
+        height: 0px;
+        background-color: var(--secondaryColor);
+        border-radius: 35px;
+        z-index: -1;
+    }
+
+    .side-menu a.active::after {
+        background: linear-gradient(45deg,
+                var(--secondaryColor),
+                var(--primaryColor));
+        width: 100%;
+        height: 100%;
+        bottom: 0px;
+        border-radius: 35px;
+        left: 0;
+        transform: skewX(0);
+        animation: active 0.2s ease;
+    }
+
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 25px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #444b57;
+    }
+
+    .mobile-search .search-form {
+        width: auto;
+        height: 34px;
+        background-color: transparent;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        border: 0;
+        border-radius: 6px;
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-search .search-input {
+        width: 75%;
+        background-color: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 0 10px;
+        outline: 0;
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    .search-input:focus {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+        width: 95%;
+    }
+
+    .search-input:focus:hover {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+    }
+
+    .search-input:focus~.search-action {
+        background-color: var(--primaryColor);
+    }
+
+    .mobile-search .search-action {
+        background-color: var(--primaryColor);
+        cursor: pointer;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    @media (max-width: 768px) {
+        .side-menu.resize {
+            width: 250px;
+            left: 0;
+            border-right: 2px solid var(--primaryColor);
+            background-color: var(--darkNavBg);
+            -webkit-clip-path: circle(141.4% at 0 0);
+            clip-path: circle(141.4% at 0 0);
+        }
+
+        .side-menu {
+            position: fixed;
+            left: -250px;
+            width: 0;
+            z-index: 99;
+        }
+
+        .content.resize {
+            width: 100%;
+            float: none;
+        }
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        /* background-color: #262626; */
+        /* background: linear-gradient(to top, #000000, #731963,#000000); */
+        /* background-image: linear-gradient(to right top, #731963, #5a1544, #3f122b, #240e17, #000000); */
+        background-color: #191919;
+    }
+
+
+    .top-image {
+        width: 70%;
+        height: 40vh;
+        background-color: #222831;
+        border-radius: 10px;
+        position: relative;
+        /* background-image: url("{%static 'images/people-2570542.jpg'%}"); */
+
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url("{%static 'images/people-2570542.jpg'%}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .user-image img {
+        border-radius: 80%;
+    }
+
+    .user-data-outer {
+        display: flex;
+        position: absolute;
+        bottom: 3%;
+        left: 2%;
+        width: 50%;
+        height: 60%;
+
+    }
+
+
+    .user-data-outer img {
+        width: 10vw
+    }
+
+    .user-action {
+        position: absolute;
+        right: 2%;
+        bottom: 2%;
+    }
+
+    .home-outer {
+        display: flex;
+    }
+
+    .products-outer .products {
+
+        height: 108vh;
+    }
+
+    .products-outer {
+        width: 54%;
+        height: 115vh;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+
+    }
+
+    .products-outer .products {
+
+        height: 100vh;
+    }
+
+    .other-details {
+        width: 15%;
+        height: 115 vh;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+
+    }
+
+    .popular-products .products2 {
+        height: 155vh;
+    }
+
+    .popular-products {
+        height: 160vh;
+        width: 25%;
+        background-color: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        border-radius: 5px;
+        right: 2%;
+        top: 13%;
+    }
+
+    .user-data {
+        margin-top: 50px;
+    }
+
+    @media (min-width: 100px) and (max-width: 700px) {
+        .popular-products {
+            display: none;
+
+
+        }
+
+        .top-image {
+            width: 98%;
+            height: 40vh;
+            background-color: aliceblue;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .user-data-outer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            bottom: 30%;
+            left: 2%;
+            width: 100%;
+            height: 20%;
+        }
+
+        .user-data-outer img {
+            width: 20vw
+        }
+
+        .products-outer {
+            width: 80%;
+            height: 120vh;
+
+        }
+
+        .products-outer .products {
+
+            height: 108vh;
+        }
+
+        .user-data {
+            margin-top: 10px;
+        }
+    }
+
+    .add-products {
+        width: 95%;
+        height: 52%;
+        background-color: rgb(177, 55, 55);
+
+
+    }
+
+    form {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .top-image .btn {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .top-image {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .user-image img {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .products-outer {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .popular-products {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .other-details {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .products-outer .card {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    .popular-products .card {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+
+    @media (max-width: 480px) {
+     
+    }
+ 
+
+    @media (max-width: 700px) {
+            .chat-box{
+        width: 100%;
+    }
+    .products{
+        display: none;
+    }
+    .home-outer{
+        display: none;
+    }
+    footer , section {
+        display: none;
+    }
+    .home-outer{
+        display: none;
+    }
+    .top-image{
+        display: none;
+    }
+    .nav-bar{
+        display: none;
+    }
+    .for-mobile-dev{
+        display: flex;
+        flex-direction: column;
+      
+        
+    }
+    .for-mobile-dev .chat-header{
+        position: absolute;
+        top:0%;
+    }
+    .for-mobile-dev .input-class{
+        position: absolute;
+        bottom: 0%;
+    }
+    }
+
+
+
+    @media (min-width: 768px) and (max-width:991px) {}
+
+
+
+
+    @media (min-width: 992px) and (max-width:1199px) {}
+
+    @media (min-width: 1200px) and (max-width:1919px) {}
+
+
+    @media (min-width: 1920px) {}
+
+    section {
+        padding: 60px 0;
+        /* min-height: 100vh;*/
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .contact-area {
+        border-bottom: 1px solid #353C46;
+    }
+
+    .contact-content p {
+        font-size: 15px;
+        margin: 30px 0 60px;
+        position: relative;
+    }
+
+    .contact-content h6 {
+        color: #8b9199;
+        font-size: 15px;
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+
+    .contact-content span {
+        color: #353c47;
+        margin: 0 10px;
+    }
+
+    .contact-social {
+        margin-top: 30px;
+    }
+
+    .contact-social ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-social ul li a {
+        border: 1px solid #8b9199;
+        color: #8b9199;
+        display: inline-block;
+        height: 40px;
+        margin: 0 10px;
+        padding-top: 7px;
+
+        width: 40px;
+    }
+
+    .contact-content img {
+        max-width: 210px;
+    }
+
+    section,
+    footer {
+        background: #000000;
+        color: #868c96;
+    }
+
+    footer p {
+        padding: 40px 0;
+        text-align: center;
+    }
+
+
+
+
+
+
+
+
+
+    @media (min-width: 1920px) {}
+
+    .msg {
+        height: 50vh;
+    }
+    .chat-box {
+        width: 20vw;
+        height: 70vh;
+        background-color: rgb(0, 0, 0);
+        position: absolute;
+        right: 4%;
+        top: 10%;
+    }
+
+    .chat-box .input-class {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .chat-box form {
+        display: flex;
+
+    }
+
+    .chat-header {
+        background: #191919;
+        display: flex;
+
+    }
+
+    .for-mobile-dev .chat-header {
+        height: 75px;
+
+    }
+    
+ @media (max-width: 480px) {
+  
+    .chat-box{
+        width: 100%;
+    }
+    .products{
+        display: none;
+    }
+    .home-outer{
+        display: none;
+    }
+    footer , section {
+        display: none;
+    }
+    .home-outer{
+        display: none;
+    }
+    .top-image{
+        display: none;
+    }
+    .nav-bar{
+        display: none;
+    }
+    .for-mobile-dev{
+        display: flex;
+        flex-direction: column;
+      
+        
+    }
+    .for-mobile-dev .chat-header{
+        position: absolute;
+        top:0%;
+    }
+    .for-mobile-dev .input-class{
+        position: absolute;
+        bottom: 0%;
+    }
+}
+
+
+@media (min-width: 481px) and (max-width:767px) {
+
+
+}
+
+
+
+@media (min-width: 768px) and (max-width:991px) {
+
+}
+
+
+
+
+@media (min-width: 992px) and (max-width:1199px) {
+    .for-mobile-dev{
+        display: none;
+
+    }
+
+
+}
+
+@media (min-width: 1200px) and (max-width:1919px) {
+    .for-mobile-dev{
+        display: none;
+        
+    }
+}
+
+
+@media (min-width: 1920px) {
+    .for-mobile-dev{
+        display: none;
+        
+    }
+}
+</style>
+
+<body>
+    <div class="nav-bar  ">
+
+        <div id="menuToggle" class="toggle-menu active">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <h3 class="ps-2" style="
+        background-image:linear-gradient(to right top, #731963, #5a1544, #3f122b  );
+        -webkit-background-clip: text;
+         background-clip: text;
+         color: transparent; font-family: 'Pacifico', cursive;">Altos Classified</h3>
+
+    </div>
+
+    <div class="main">
+
+        <div id="sideMenu" class="side-menu">
+
+
+
+            <div class="menu-items">
+
+
+            </div>
+
+        </div>
+        <br><br><br>
+        {% for k in user %}
+        <div class="top-image mx-3 mt-3">
+            <div class="user-data-outer">
+                <div class="user-image  mx-4">
+                    {% if k.img %}
+                    <img src="{{k.img.url}}" style="height: 120px;" class="mx-1 mt-3">
+                    {% else %}
+                    <img src="{%static 'images/logo.png'%}">
+                    {% endif %}
+                </div>
+
+                <div class="user-data mx-4">
+                    <h6 class="text-light">User Name: {{k.user.username}} </h6>
+                    <h6 class="text-light">Place : {{k.state}} </h6>
+                </div>
+            </div>
+
+           
+            {% endfor %}
+        </div>
+
+
+        <!-- products -->
+
+
+
+        <div class="home-outer">
+
+
+            <div class="other-details mt-4 mx-3 text-center">
+                <div style="height: 40px; background-color:black; color: #bfbfbf;" class="  pt-1">
+                    <h5>Options</h5>
+                </div>
+                <br>
+                <a class="" style="text-decoration: none; color: #bfbfbf;" href=""><i class="fa-solid fa-house"></i>
+                    &nbsp;Home</a>
+                <hr>
+                <a class=" " style="text-decoration: none; color: #bfbfbf;" href=""><i
+                        class="fa-solid fa-cart-shopping"></i></i> Orders</a>
+                <hr>
+                <a class=" " style="text-decoration: none; color: #bfbfbf;" href=""><i class="fa-solid fa-gear"></i>
+                    Settings</a>
+                <hr>
+                <a class=" " style="text-decoration: none; color: #bfbfbf;" href=""><i
+                        class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                <hr>
+            </div>
+
+            <div class="products-outer mt-4  ">
+                <div style="height: 50px; background-color: black; color: #bfbfbf;  ">
+                    {% for k in user %}
+                    <h5 class="pt-1 ps-2 text-fluid">{{k.user.username}} Products</h5>
+                    {% endfor %}
+                </div>
+                <br><br>
+
+
+                <div class="row products row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 mx-auto  overflow-auto  ">
+                    {% for p in products %}
+                    <div class="col  ">
+                        <div class="card w-100  " style="border-style: none; background-color: black;">
+
+                            {% if p.productimage_set.all %}
+
+                            <center>
+                                <img class="img-fluid" style="width: 200px; height: 100px;"
+                                    src="{{ p.productimage_set.first.image.url }}">
+                                {% else %}
+                                <img class="img-fluid" style="width: 300px; height: 200px;"
+                                    src="{% static 'images/image2.jpg' %}">
+                                {% endif %}
+                            </center>
+                            <div class="card-body" style="background-color: black;">
+                                <h5 style="color: #cccccc;" class="card-title text-center ">{{p.Product_Name}}</h5>
+                                <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                                <h5 style="color: #cccccc;" class="card-text text-center ">$ {{p.Product_Price}}</h5>
+                                <div class="text-center">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                                <a style="text-decoration: none;" href="{% url 'ProductDetail' p.id %}">
+                                    <h5 style="color: #cccccc;" class=" ">Buy Now</h5>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <br>
+            </div>
+        </div>
+
+        <div class="popular-products ">
+            <div style="height: 40px; background-color: black;color: #bfbfbf;" class=" pt-1">
+                <h5 class="ps-2">Popular Product's</h5>
+            </div>
+            <br><br>
+
+
+
+
+
+
+            <div class="row products2 row-cols-1 row-cols-md-1 row-cols-lg-1 g-5 mx-auto overflow-auto ">
+                {% for p in popular_prd|slice:"3" %}
+                <div class="col  ">
+                    <div class="card w-100   " style="border-style: none; background-color: black;">
+                        <center>
+                            {% if p.productimage_set.all %}
+                            <img style="width: 250px; height: 150px;" class="img-fluid"
+                                src="{{ p.productimage_set.first.image.url }}">
+                            {% else %}
+                            <img style="width: 300px; height: 200px;" src="{% static 'images/image2.jpg' %}">
+                            {% endif %}
+                        </center>
+                        <div style="color: #cccccc;" class="card-body" style="background-color: black;">
+                            <h5 class="card-title text-center ">{{p.Product_Name}}</h5>
+                            <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                            <h5 style="color: #cccccc;" class="card-text text-center ">$ {{p.Product_Price}}</h5>
+                            <div class="text-center">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                            <a style="text-decoration: none;" href="{% url 'ProductDetail' p.id %}">
+                                <h5 style="color: #cccccc;" class=" ">Buy Now</h5>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+
+                <br>
+
+            </div>
+            <div class="chat-box " id="chat-box">
+                {% for k in user %}
+                <div class="chat-header" style="display:flex;">
+                    {% if k.img %}
+                    <img class="mx-2 mt-2" src="{{k.img.url}}" style="height: 60px; border-radius: 50%;"
+                        class="mx-1 mt-3">
+                    {% else %}
+                    <img class="img-fluid" src="{%static 'images/logo.png'%}" style="height: 60px; border-radius: 50%;">
+                    {% endif %}
+
+                    <h6 style="color: #cccccc;" class="mt-3 mx-2 ">{{ receiver.username }}</h6>
+
+
+                    <a href="{% url 'OppositeProfile' k.user_id %}" id=" "><i class="fa-solid fa-xmark text-light"
+                            style="position: absolute; right: 5%; top: 3%;"></i></a>
+                    <!-- <button style="background-color: #e71554;" >></i></button> -->
+                </div>
+                {% endfor %}
+       
+
+                <style>
+                    .right p{
+                        padding-right: 10px;
+                    }
+                    .right {
+                        background-color:  #0d0d0d;
+
+                        color: #ffffff;
+                        border-radius: 15px;
+
+                        text-align: right;
+                        height: 40px;
+                    
+
+
+                    }
+                    .left p{
+                        padding-left: 10px;
+                    }
+                    .left {
+                        background-color: #764151;
+                        border-radius: 15px;
+                        color: #ffffff;
+
+                        height: 40px;
+
+                        text-align: left;
+                    }
+                </style>
+
+                <div class="msg overflow-auto" id="chat-container ">
+
+
+
+
+                    {% for message in messages %}
+                    <div class="message {% if message.sender == request.user %}right{% else %}left{% endif %}">
+
+                        <p class="mt-2">{{ message.message }}</p>
+
+                    </div>
+                    {% endfor %}
+
+
+
+
+                    <center>
+                        <form method="post" class="input-class w-100">
+                            {% csrf_token %}
+                            <input class="form-control w-100" name="message" type="text"
+                                placeholder="Type your message">
+                            <button class="btn btn-outline-dark" type="submit"> <img style="width: 20px;"
+                                    class="img-fluid" src="{% static 'images/send-message (1).png' %}"></button>
+                        </form>
+                    </center>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        
+    </div>
+
+
+
+
+
+
+    <style>
+       
+        .for-mobile-dev .right {
+            background-color:  #0d0d0d;
+
+            color: #ffffff;
+            border-radius: 15px;
+
+            text-align: right;
+            height: 40px;
+        
+
+
+        }
+  
+        .for-mobile-dev .left {
+            background-color: #764151;
+            border-radius: 15px;
+            color: #ffffff;
+
+            height: 40px;
+
+            text-align: left;
+        }
+    </style>
+
+    <div class="for-mobile-dev  ">
+        {% for k in user %}
+        <div class="chat-header w-100" style="display:flex ;       background-color:  #0d0d0d;">
+            {% if k.img %}
+            <img class="mx-2 mt-2" src="{{k.img.url}}" style="height: 60px; border-radius: 50%;" class="mx-1 mt-3">
+            {% else %}
+            <img src="{%static 'images/logo.png'%}">
+            {% endif %}
+
+            <h1 style="color: #cccccc;" class="mt-3 mx-2 ">{{ receiver.username }}</h1>
+
+            <!-- <button style="background-color: #e71554;" >></i></button> -->
+        </div>
+        {% endfor %}
+     
+        <div id="chat-container">
+
+            {% for message in messages %}
+            <div class="mt-2 message {% if message.sender == request.user %}right{% else %}left{% endif %}">
+                <p>{{ message.message }}</p>
+            </div>
+            {% endfor %}
+
+
+            <form method="post" class="input-class ps-1  w-100">
+                {% csrf_token %}
+
+                <input class="form-control w-100" name="message" type="text" placeholder="Type your message">
+                <button class="btn btn-outline-dark" type="submit"> <img style="width: 20px;" class="img-fluid"
+                        src="{% static 'images/send-message (1).png' %}"></button>
+            </form>
+
+        </div>
+    </div>
+
+    <br><br><br><br><br>
+    <section class="contact-area" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="contact-content text-center">
+                        <p>China |
+                            India |
+                            United States |
+                            Indonesia |
+                            Pakistan |
+                            Brazil |
+                            Nigeria |
+                            Bangladesh |
+                            Russia |
+                            Mexico </p>
+
+                        <div class="contact-social">
+                            <ul>
+                                <li><a class="hover-target" href=""><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-instagram"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-whatsapp"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p class="text-fluid">Copyright &copy; 2023 Altos Technologies</p>
+          
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleMenu = document.getElementById("menuToggle");
+            const sideMenu = document.getElementById("sideMenu");
+            const content = document.querySelector(".content");
+            const bars = document.querySelectorAll(".bar");
+            const menuItems = document.querySelectorAll(".menu-items .item");
+
+
+            const isMenuOpen = localStorage.getItem("isMenuOpen");
+
+
+            if (isMenuOpen === "true") {
+                sideMenu.classList.add("resize");
+                content.classList.add("resize");
+                toggleMenu.classList.add("active");
+            }
+
+            toggleMenu.addEventListener("click", () => {
+                sideMenu.classList.toggle("resize");
+                content.classList.toggle("resize");
+                toggleMenu.classList.toggle("active");
+
+
+                localStorage.setItem("isMenuOpen", sideMenu.classList.contains("resize"));
+            });
+
+            bars.forEach((bar) => {
+                bar.addEventListener("transitionend", () => {
+                    bar.classList.remove("anim-bar");
+                });
+            });
+
+
+            setTimeout(() => {
+                bars.forEach((bar) => {
+                    bar.classList.add("anim-bar");
+                });
+            }, 1000);
+
+
+            menuItems.forEach(function (item) {
+                item.addEventListener("click", function (event) {
+                    event.preventDefault();
+
+                    menuItems.forEach(function (menuItem) {
+                        menuItem.classList.remove("active");
+                    });
+
+                    this.classList.add("active");
+                });
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

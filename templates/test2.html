@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook-style Chat Box</title>
+    <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+  
+</head>
+<style>
+  /* Reset some default styles */
+body, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Chat box styles */
+.chat-box {
+    height: 500px;
+    width: 300px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Chat header styles */
+.chat-header {
+    background-color: #e71554; /* Facebook blue color */
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    height: 45px;
+    justify-content: space-between;
+}
+
+/* Chat messages styles */
+.chat-messages {
+    padding: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.chat-messages ul {
+    padding: 0;
+}
+
+.chat-messages li {
+    margin-bottom: 10px;
+}
+
+/* Sent message styles */
+.sent {
+    text-align: right;
+}
+
+.sent .message-content {
+    background-color: #389f7d; /* Facebook blue color */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    max-width: 70%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Received message styles */
+.received .message-content {
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 5px;
+    display: inline-block;
+    max-width: 70%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat input styles */
+
+
+.chat-input input[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 14px;
+    width: 70%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.chat-input button {
+    background-color: #1877f2; /* Facebook blue color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 20%;
+    position: absolute;
+    bottom: 0;
+    right: 0%;
+    
+}
+
+</style>
+<body>
+    <button  id="open-chat-button">Chat</button>
+    <div class="chat-box" id="chat-box">
+        <div class="chat-header">
+            <h5>gokul</h5>
+            <a id="close-chat-button"><i class="fa-solid fa-xmark"></i></a>
+            <!-- <button style="background-color: #e71554;" >></i></button> -->
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script>
+      const openChatButton = document.getElementById('open-chat-button');
+const closeChatButton = document.getElementById('close-chat-button');
+const chatBox = document.getElementById('chat-box');
+const messageInput = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+const chatMessages = document.getElementById('chat-messages');
+
+// Function to toggle the chat box
+function toggleChat() {
+    chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
+}
+
+// Function to close the chat box
+function closeChat() {
+    chatBox.style.display = 'none';
+}
+
+// Function to add a new message to the chat
+function addMessage(message, isSent) {
+    const messageElement = document.createElement('li');
+    messageElement.className = isSent ? 'sent' : 'received';
+
+    const messageContent = document.createElement('div');
+    messageContent.className = 'message-content';
+    messageContent.textContent = message;
+
+    messageElement.appendChild(messageContent);
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+}
+
+// Function to send a message
+function sendMessage() {
+    const message = messageInput.value.trim();
+    if (message) {
+        addMessage(message, true);
+        messageInput.value = '';
+
+        // Simulate a received response (you can replace this with actual chat functionality)
+        setTimeout(function () {
+            addMessage('This is a response from John Doe.', false);
+        }, 1000);
+    }
+}
+
+// Event listeners
+openChatButton.addEventListener('click', toggleChat);
+closeChatButton.addEventListener('click', closeChat);
+sendButton.addEventListener('click', sendMessage);
+messageInput.addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+});
+
+    </script>
+</body>
+</html>

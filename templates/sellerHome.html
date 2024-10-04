@@ -1,0 +1,1189 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+    <title>Hello, world!</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); 
+    :root {
+
+
+        --primaryTextColor: #dcf4ff;
+
+        --bg: #000000;
+        --nav: #000000;
+        --darkNavBg: #000000;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    body {
+        background-color: #000000;
+        /* background-image: url("{%static 'images/bg2.jpg'%}");
+    background-attachment: fixed; */
+        background-size: 100%;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .nav-bar {
+        width: 100%;
+        height: 35px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--nav);
+        padding: 1px 10px;
+        display: flex;
+        align-items: center;
+        z-index: 99;
+    }
+
+    .nav-bar .toggle-menu {
+        width: 26px;
+        height: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .toggle-menu span {
+        width: 18px;
+        height: 2px;
+        background-color: var(--primaryTextColor);
+        margin: 2px;
+    }
+
+
+    .side-menu {
+        width: 0;
+        height: calc(100% - 33px);
+        overflow: hidden;
+        top: 40px;
+        left: 0;
+        padding-top: 15px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        overscroll-behavior: contain;
+        padding-bottom: 20px;
+        top: 60px;
+        z-index: 9999999;
+    }
+
+    .side-menu.resize {
+        width: 250px;
+        border-right: 2px solid var(--primaryColor);
+        background-color: var(--darkNavBg);
+    }
+
+    .side-menu .menu-items {
+        padding: 0px 15px;
+    }
+
+    .side-menu a {
+        position: relative;
+        text-decoration: none;
+        color: var(--secondaryTextColor);
+        width: 100%;
+        height: 35px;
+        margin-top: 2px;
+        padding: 10px 20px;
+        border-radius: 35px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+    }
+
+    .side-menu a::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 0%;
+        height: 0px;
+        background-color: var(--secondaryColor);
+        border-radius: 35px;
+        z-index: -1;
+    }
+
+
+
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 25px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #444b57;
+    }
+
+    .mobile-search .search-form {
+        width: auto;
+        height: 34px;
+        background-color: transparent;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        border: 0;
+        border-radius: 6px;
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-search .search-input {
+        width: 75%;
+        background-color: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 0 10px;
+        outline: 0;
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    .search-input:focus {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+        width: 95%;
+    }
+
+    .search-input:focus:hover {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+    }
+
+    .search-input:focus~.search-action {
+        background-color: var(--primaryColor);
+    }
+
+    .mobile-search .search-action {
+        background-color: var(--primaryColor);
+        cursor: pointer;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    @media (max-width: 768px) {
+        .side-menu.resize {
+            width: 250px;
+            left: 0;
+            border-right: 2px solid var(--primaryColor);
+            background-color: var(--darkNavBg);
+            -webkit-clip-path: circle(141.4% at 0 0);
+            clip-path: circle(141.4% at 0 0);
+        }
+
+        .side-menu {
+            position: fixed;
+            left: -250px;
+            width: 0;
+            z-index: 99;
+        }
+
+        .content.resize {
+            width: 100%;
+            float: none;
+        }
+    }
+
+
+    .youtube-button,
+    .external-link-button {
+        padding: 8px 8px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        color: #333;
+        font-size: 20px;
+        margin: 2px;
+        text-decoration: none;
+    }
+
+    .youtube-button:hover {
+        background-color: #ca3333;
+        color: #f2f2f2;
+    }
+
+    .external-link-button:hover {
+        background-color: #0b63b6;
+        color: #f2f2f2;
+    }
+
+
+    .detail {
+        background-color: black;
+        display: flex;
+
+    }
+
+    .detail-text {
+        width: 50%;
+
+    }
+
+    .detail-image {
+        width: 50%;
+    }
+
+    .gallery1 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: black;
+    }
+
+    .gallery-outer {
+        background-color: black;
+    }
+
+    .top-text {
+        color: white;
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        z-index: 999999;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    section {
+        padding: 60px 0;
+        /* min-height: 100vh;*/
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .contact-area {
+        border-bottom: 1px solid #353C46;
+    }
+
+    .contact-content p {
+        font-size: 15px;
+        margin: 30px 0 60px;
+        position: relative;
+    }
+
+    .contact-content h6 {
+        color: #8b9199;
+        font-size: 15px;
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+
+    .contact-content span {
+        color: #353c47;
+        margin: 0 10px;
+    }
+
+    .contact-social {
+        margin-top: 30px;
+    }
+
+    .contact-social ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-social ul li a {
+        border: 1px solid #8b9199;
+        color: #8b9199;
+        display: inline-block;
+        height: 40px;
+        margin: 0 10px;
+        padding-top: 7px;
+
+        width: 40px;
+    }
+
+    .contact-content img {
+        max-width: 210px;
+    }
+
+    section,
+    footer {
+        background: #000;
+        color: #ffffff;
+    }
+
+    footer p {
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    footer img {
+        width: 44px;
+    }
+
+    @media (min-width: 100px) and (max-width: 700px) {
+        #catid {
+            display: none;
+        }
+
+        .search-option .btn {
+            width: 80px !important;
+
+        }
+    }
+
+    @media (min-width: 768px) and (max-width:991px) {
+        .search-option {
+            position: absolute;
+
+            top: 45% !important;
+            right: 50%;
+
+            transform: translate(50%, 50%);
+        }
+
+    }
+
+    @media (max-width: 480px) {
+        .search-option {
+            position: absolute;
+
+            top: 50% !important;
+            right: 50%;
+
+            transform: translate(50%, 50%);
+        }
+        .addpro{
+            position: absolute;
+            right: 60%  ;
+        } 
+        .credcard{
+            position: absolute;
+            right: 50%;
+        }
+    }
+
+    @media (min-width: 481px) and (max-width:767px) {
+        .search-option {
+            position: absolute;
+
+            top: 40% !important;
+            right: 50%;
+
+            transform: translate(50%, 50%);
+        }
+
+    }
+
+    @media (min-width: 992px) and (max-width:1199px) {
+        .search-option {
+            position: absolute;
+
+            top: 30%;
+            right: 50%;
+
+            transform: translate(50%, 50%);
+        }
+
+    }
+
+    @media (min-width: 1200px) and (max-width:1919px) {
+        .search-option {
+            position: absolute;
+
+            top: 40% !important;
+            right: 50%;
+
+            transform: translate(50%, 50%);
+        }
+
+    }
+
+    @media (min-width: 700px) {
+        .categories-mob {
+            display: none;
+        }
+
+        .Pop-cat2 {
+            display: none;
+        }
+
+        .categories-mob-more-btn {
+            display: none;
+        }
+
+    }
+
+    .nav-bar {
+        height: 10vh;
+        width: 100%;
+        position: fixed !important;
+    }
+
+    .profile {
+        position: absolute;
+        top: 5%;
+        right: 3%;
+    }
+
+    /* .menu-items img {
+  border-radius: 50%;
+} */
+    .logout {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 8%;
+    }
+
+    .cart {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 15%;
+    }
+
+    .user {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 22%;
+    }
+
+    .top-image {
+        position: relative;
+        background-image:linear-gradient(to bottom, rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.5)),
+        url("{%static 'images/steptodown.com500312.jpg'%}");
+        height: 30rem;
+        background-position:top;
+        background-size: cover;
+        /* background-size: 100%; */
+        background-repeat: no-repeat;
+
+    }
+
+    .search-option {
+        position: absolute;
+
+        top: 50%;
+        right: 50%;
+
+        transform: translate(50%, 50%);
+    }
+
+    .search-option input {
+
+        height: 7vh;
+        width: 50vw !important;
+    }
+
+    .products {
+        width: 85vw;
+        display: flex;
+
+
+    }
+
+    .categories {
+        width: 85vw;
+        display: flex;
+        margin: auto;
+
+
+    }
+
+    .text-prod {
+        margin-left: 9vw;
+
+    }
+
+    #catid {
+        background-color: #000000;
+    }
+
+    .products .card {
+        border-style: none;
+    }
+
+    body {
+
+        /* background-image: url("{%static 'images/bg2.jpg'%}");
+    background-attachment: fixed; */
+        background-size: 100%;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .categories-mob-more {
+        display: flex;
+        flex-direction: row;
+    }
+
+    h4 {
+        color: #bfbfbf;
+    }
+
+    #catid h4 {
+        color: #bfbfbf;
+    }
+
+    #catid p {
+        color: #bfbfbf;
+    }
+
+    .categories .col a {
+        text-decoration: none;
+        color: #d9d9d9;
+
+    }
+
+    .categories .col a:hover {
+        color: #731963;
+
+    }
+
+    .collapse .categories-mob-more a {
+        text-decoration: none;
+        color: #d9d9d9;
+
+    }
+
+    .categories-mob a {
+        text-decoration: none;
+        color: #d9d9d9;
+
+    }
+
+    .categories-mob a:hover {
+        color: #731963;
+    }
+
+    .collapse .categories-mob-more a:hover {
+        color: #731963;
+    }
+
+    .prod-1 .row .col .card {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+    }
+
+
+
+    .card {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 3%;
+
+    }
+
+    .card .buynow {
+        border-radius: 0% 0% 5% 5%;
+    }
+
+    .fa-star {
+        color: #ca3333;
+    }
+</style>
+
+
+<body>
+    <div class="nav-bar">
+        <div id="menuToggle" class="toggle-menu active">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+
+        <h3  class=" text-fluid"style="
+        background-image:linear-gradient(to right top, #731963, #5a1544, #3f122b  );
+        -webkit-background-clip: text;
+         background-clip: text;
+         color: transparent; font-family: 'Pacifico', cursive;">Altos Classified</h3>
+    </div>
+
+    <div class="main">
+        <div id="sideMenu" class="side-menu ">
+
+            <div class="menu-items mx-auto">
+                {% if users.img %}
+                <img src="{{users.img.url}}" style="height: 200px;" class="mx-1">
+                {% else %}
+                <img src="{%static 'images/logo.png'%}">
+                {% endif %}
+                <a href="#" class="item text-center text-light">{{users.user.first_name}} {{users.user.last_name}}</a>
+                <a href="#" class="item text-center text-light">{{users.Join_Date}}</a>
+
+                <div class="cart text-light bg-secondary text-center">
+                    <a href="{% url 'cart' user.id %}" class="pt-1 mx-2">Cart</a>
+                </div>
+                <div class="logout text-light bg-secondary text-center">
+                    <a href="{%url 'logout'%}" class="pt-1 mx-1">Logout</a>
+                </div>
+                <div class="user text-light bg-secondary text-center">
+                    <a href="{% url 'sellerProfile' user.id %}" class="pt-1 mx-1">Profile</a>
+                </div>
+
+            </div>
+        </div>
+        <!-- <div class="content"> -->
+        <!-- <div class="top-text">
+      <h1 style="font-size: 4vw; opacity: 0.5;">Buy & Sell<br> Anything, Anywhere</h1>
+        </div> -->
+
+
+        <div class="top-image">
+
+        </div>
+
+
+        <div class="search-option ">
+            <form class="d-flex">
+                <input class="form-control" type="search" placeholder="What are you looking for ?">
+                <button
+                    style=" background-image: linear-gradient(to right top, #731963, #5a1544, #3f122b, #240e17, #000000);"
+                    type="submit" class=" btn w-25  text-light">
+                    Search
+                </button>
+
+            </form>
+        </div>
+
+
+        <section id="catid">
+
+            <div class="Pop-cat text-prod">
+                <h4 class="text-light ">Popular categories</h4>
+            </div>
+            <div class="categories row row-cols-1  row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-5 mx-auto">
+
+                <div class="col cat-1 text-light">
+
+                    <h5><i class="fa-solid fa-car"></i> Cars</h5><br>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Maruti Suzuki</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Hyundai</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Mahindra</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Toyota</a></p>
+                </div>
+                <div class="col cat-2 text-light">
+                    <h5><i class="fa-solid fa-laptop"></i>Electronics</h5>
+                    <br>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Computers & Laptops</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Cameras & Lenses</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Games & Entertainment</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Computer Accessories</a></p>
+                </div>
+                <div class="col cat-3 text-light">
+
+                    <h5><i class="fa-solid fa-couch"></i> Furniture</h5>
+                    <br>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Sofa & Dining</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Beds & Wardrobes</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Home Decor & Garden</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Other Household Items</a></p>
+                    <br><bR>
+                    <button type="button" class="btn btn text-light " data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        All categories <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+                <div class="col cat-4 text-light">
+                    <h5><i class="fa fa-paw" aria-hidden="true"></i> Pet</h5>
+                    <br>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Fishes & Aquarium</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Pet Food & Accessories</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Dogs</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Other Pets</a></p>
+                </div>
+                <div class="col cat-5 text-light">
+                    <h5><i class="fa-sharp fa-solid fa-motorcycle"></i> Bikes</h5>
+                    <br>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Motorcycles</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Scooters</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Spare Parts</a></p>
+                    <p><a href="{% url 'ProductsPage' 3 %}">Bicycles</a></p>
+                </div>
+
+            </div>
+
+
+
+    </div>
+
+    </section>
+
+    <div class="Pop-cat2 text-prod">
+        <br>
+        <h4 class="text-light ">Popular categories</h4>
+    </div><br>
+    <div class="categories-mob row row-cols-2  row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-5 mx-auto">
+
+        <div class="col cat-1 text-light">
+
+            <h5><i class="fa-solid fa-car"></i> Cars</h5><br>
+            <p><a href="{% url 'ProductsPage' 3 %}">Maruti Suzuki</a></p>
+            <p><a href="{% url 'ProductsPage' 3 %}">Hyundai</a></p>
+            <p><a href="{% url 'ProductsPage' 3 %}">Mahindra</a></p>
+            <p><a href="{% url 'ProductsPage' 3 %}">Toyota</a></p>
+        </div>
+        <div class="col cat-2 text-light">
+            <h5><i class="fa-sharp fa-solid fa-motorcycle"></i> Bikes</h5>
+            <br>
+            <p><a href="{% url 'ProductsPage' 3 %}">Motorcycles</a></p>
+            <p><a href="{% url 'ProductsPage' 3 %}">Scooters</a></p>
+            <p><a href="{% url 'ProductsPage' 3 %}">Spare Parts</a></p>
+            <p><a href="{% url 'ProductsPage' 3 %}">Bicycles</a></p>
+
+        </div>
+    </div>
+    <button class="btn btn-dark w-100 categories-mob-more-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        More
+    </button>
+
+    <div class="collapse" id="collapseExample">
+        <br>
+        <div class="categories-mob-more row row-cols-2  row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-5 mx-auto">
+
+            <div class="col cat-3 text-light ">
+
+                <h5><i class="fa-solid fa-couch"></i> Furniture</h5>
+                <br>
+                <p><a href="{% url 'ProductsPage' 3 %}">Sofa & Dining</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Beds & Wardrobes</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Home Decor & Garden</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Other Household Items</a></p>
+            </div>
+            <div class="col cat-4 text-light">
+                <h5><i class="fa fa-paw" aria-hidden="true"></i> Pet</h5>
+                <br>
+                <p><a href="{% url 'ProductsPage' 3 %}">Fishes & Aquarium</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Pet Food & Accessories</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Dogs</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Other Pets</a></p>
+            </div>
+            <div class="col cat-5 text-light">
+                <h5><i class="fa-solid fa-laptop"></i>Electronics</h5>
+                <br>
+                <p><a href="{% url 'ProductsPage' 3 %}">Computers & Laptops</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Cameras & Lenses</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Games & Entertainment</a></p>
+                <p><a href="{% url 'ProductsPage' 3 %}">Computer Accessories</a></p>
+            </div>
+            <button type="button" class="btn btn text-light " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                All categories <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+       <div class="prod-1" style=" background: linear-gradient(to top, #000000, #191919 ,#000000);">
+        <br><br>
+
+        <div class="text-light text-prod">
+            <h4>Popular in Used Cars for Sale</h4>
+        </div>
+
+        <!-- recommend products -->
+        <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-4 g-5 mx-auto mt-1">
+            {% for p in products|slice:"8" %}
+            <div class="col  ">
+                <div class="card w-100 h-100" style="border-style: none; background-color: black;">
+
+                    {% if p.productimage_set.all %}
+                    <img style="width: 300px; height: 200px;" src="{{ p.productimage_set.first.image.url }}">
+                    {% else %}
+                    <img style="width: 300px; height: 200px;" src="{% static 'images/image2.jpg' %}">
+                    {% endif %}
+
+                    <div class="card-body" style="background-color: black;">
+                        <h5 class="card-title text-center text-light">{{p.Product_Name}}</h5>
+                        <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                        <h5 class="card-text text-center text-light">$ {{p.Product_Price}}</h5>
+                        <div class="text-center">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                        <a style="text-decoration: none;" href="{% url 'ProductDetail' p.id %}"><h5 class="text-light">Buy Now</h5></a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+<br><br><br><br><br><br>
+
+        <div class="text-light text-prod">
+            <h4>Popular in Used Cars for Sale</h4>
+        </div>
+
+        <!-- recommend products -->
+        <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-4 g-5 mx-auto mt-1">
+            {% for p in cars|slice:"8" %}
+            <div class="col  ">
+                <div class="card w-100 h-100" style="border-style: none; background-color: black;">
+
+                    {% if p.productimage_set.all %}
+                    <img style="width: 300px; height: 200px;" src="{{ p.productimage_set.first.image.url }}">
+                    {% else %}
+                    <img style="width: 300px; height: 200px;" src="{% static 'images/image2.jpg' %}">
+                    {% endif %}
+
+                    <div class="card-body" style="background-color: black;">
+                        <h5 class="card-title text-center text-light">{{p.Product_Name}}</h5>
+                        <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                        <h5 class="card-text text-center text-light">$ {{p.Product_Price}}</h5>
+                        <div class="text-center">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                        <a style="text-decoration: none;" href="{% url 'ProductDetail' p.id %}"><h5 class="text-light">Buy Now</h5></a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+
+
+
+        <br><br><br><br><br><br>
+
+        <div class="text-light text-prod">
+            <h4>Popular in Used Cars for Sale</h4>
+        </div>
+
+        <!-- recommend products -->
+        <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-4 g-5 mx-auto mt-1">
+            {% for p in fashions|slice:"8" %}
+            <div class="col  ">
+                <div class="card w-100 h-100" style="border-style: none; background-color: black;">
+
+                    {% if p.productimage_set.all %}
+                    <img style="width: 300px; height: 200px;" src="{{ p.productimage_set.first.image.url }}">
+                    {% else %}
+                    <img style="width: 300px; height: 200px;" src="{% static 'images/image2.jpg' %}">
+                    {% endif %}
+
+                    <div class="card-body" style="background-color: black;">
+                        <h5 class="card-title text-center text-light">{{p.Product_Name}}</h5>
+                        <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                        <h5 class="card-text text-center text-light">$ {{p.Product_Price}}</h5>
+                        <div class="text-center">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                        <a style="text-decoration: none;" href="{% url 'ProductDetail' p.id %}"><h5 class="text-light">Buy Now</h5></a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+ 
+    <br><br><br>
+
+    
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen ">
+            <div class="modal-content "
+                style=" background-image: linear-gradient(to right top, #000000, #000000, #000000, #000000, #000000);">
+                <div class="modal-header " style="border: #0b63b6;  ">
+                    <h5 style="padding-left:7vw;" class="modal-title text-light " id="exampleModalLabel">All categories
+                    </h5>
+                    <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="categories row row-cols-2  row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-4 mx-auto">
+
+                        <div class="col cat-1 text-light">
+
+                            <h5>Cars</h5><br>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Maruti Suzuki</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Hyundai</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Mahindra</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Toyota</a></p>
+                        </div>
+                        <div class="col cat-2 text-light">
+                            <h5> Electronics</h5>
+                            <br>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Computers & Laptops</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Cameras & Lenses</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Games & Entertainment</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Computer Accessories</a></p>
+                        </div>
+                        <div class="col cat-3 text-light">
+
+                            <h5> Furniture</h5>
+                            <br>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Sofa & Dining</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Beds & Wardrobes</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Home Decor & Garden</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Other Household Items</a></p>
+
+
+                        </div>
+                        <div class="col cat-4 text-light">
+                            <h5> Pet</h5>
+                            <br>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Fishes & Aquarium</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Pet Food & Accessories</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Dogs</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Other Pets</a></p>
+                        </div>
+                        <div class="col cat-5 text-light">
+                            <h5> Bikes</h5>
+                            <br>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Motorcycles</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Scooters</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Spare Parts</a></p>
+                            <p><a href="{% url 'ProductsPage' 3 %}">Bicycles</a></p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: #0b63b6;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="{% url 'addProductPage' %}">
+        <button style="position: absolute; right:14%; top: 2%;z-index: 6000 ; position: fixed;"
+            class="btn btn-outline-dark text-light addpro"> <i class="fa-solid fa-square-plus"></i>&nbsp;&nbsp;&nbsp; </button>
+    </form>
+
+    <form action="{% url 'paymentshow' user.id %}">
+        <button style="position: absolute; right:8%; top: 2%;z-index: 6000 ; position: fixed;"
+            class="btn btn-outline-dark text-light credcard "><i class="fa-regular fa-credit-card"></i> &nbsp;</button>
+    </form>
+ 
+
+
+
+    <div style="position: absolute; right:2%; top: 2%;z-index: 6000 ; position: fixed;">
+        <a type="button" class="btn  " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <i class="fa-regular fa-bell fa-xl text-light "></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+          
+                {{ chat|length }} 
+       
+            </span>
+        </a>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div style="z-index:99999;" class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog " style="position:absolute; right: 2%; top: 5%;">
+            <div class="modal-content " style="background-color: #0d0d0d;">
+                <div class="modal-header" style="border: #0b63b6; background-color: #1f1f29; ">
+                    <h5 class="modal-title text-light" id="staticBackdropLabel">Notifications</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <br>
+                <div class="modal-body text-light" style="border: #0b63b6; ">
+
+                    {% for chat in chat reversed%}
+
+
+
+
+                    <div style="display:flex; flex-direction: row;">
+                    
+
+                        <div class="ms-3">
+                            <div>
+                                <h5>{{chat.sender.username}}</h5>
+                            </div>
+                            <div>
+                                <a class="text-light" style="text-decoration: none;"
+                                    href="{% url 'chat_with_user' chat.sender_id %}">
+                                    <h6>Send a new message
+                                        {{chat.timestamp}} </h6>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+
+
+                    <br>
+
+
+
+                    {% endfor %}
+
+
+
+                    <div class="modal-footer" style="border: #0b63b6; ">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <section class="contact-area" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="contact-content text-center">
+                        <p>China |
+                            India |
+                            United States |
+                            Indonesia |
+                            Pakistan |
+                            Brazil |
+                            Nigeria |
+                            Bangladesh |
+                            Russia |
+                            Mexico </p>
+
+                        <div class="contact-social">
+                            <ul>
+                                <li><a class="hover-target" href=""><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-instagram"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-whatsapp"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Copyright &copy; 2023 Altos Technologies</p>
+    </footer>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const toggleMenu = document.getElementById("menuToggle");
+          const sideMenu = document.getElementById("sideMenu");
+          const content = document.querySelector(".content");
+          const bars = document.querySelectorAll(".bar");
+          const menuItems = document.querySelectorAll(".menu-items .item");
+    
+    
+          const isMenuOpen = localStorage.getItem("isMenuOpen");
+    
+    
+          if (isMenuOpen === "true") {
+            sideMenu.classList.add("resize");
+            content.classList.add("resize");
+            toggleMenu.classList.add("active");
+          }
+    
+          toggleMenu.addEventListener("click", () => {
+            sideMenu.classList.toggle("resize");
+            content.classList.toggle("resize");
+            toggleMenu.classList.toggle("active");
+    
+    
+            localStorage.setItem("isMenuOpen", sideMenu.classList.contains("resize"));
+          });
+    
+          bars.forEach((bar) => {
+            bar.addEventListener("transitionend", () => {
+              bar.classList.remove("anim-bar");
+            });
+          });
+    
+    
+          setTimeout(() => {
+            bars.forEach((bar) => {
+              bar.classList.add("anim-bar");
+            });
+          }, 1000);
+    
+    
+          menuItems.forEach(function (item) {
+            item.addEventListener("click", function (event) {
+              event.preventDefault();
+    
+              menuItems.forEach(function (menuItem) {
+                menuItem.classList.remove("active");
+              });
+    
+              this.classList.add("active");
+            });
+          });
+        });
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1027 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+    <title>Hello, world!</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    body {
+        background-color: #0d0d0d;
+    }
+
+    :root {
+
+
+
+        --nav: #000000;
+
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* body {
+        background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url("{%static 'images/forest-5855196.jpg'%}");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+    } */
+
+    /* body {
+
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url("{%static 'images/reg.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: 100vw 100vh;
+    } */
+    /* body{
+        position: relative;
+    } */
+    .form-outer {
+        width: 50%;
+        height: 50vh;
+        background-color: rgb(0, 0, 0);
+        display: flex;
+        flex-direction: row;
+        /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50,-50); */
+        margin-top: 25vh;
+    }
+
+    .image-outer {
+        width: 50%;
+
+        /* background-color: blue; */
+    }
+
+    .form-inner {
+        width: 50%;
+        background-color: rgb(0, 0, 0);
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .image-outer img {
+        height: 100%;
+    }
+
+    .form2 {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .form-inner form input {
+        border-style: none;
+
+    }
+
+    .form-inner form button {
+        border-style: none;
+    }
+
+    .nav-bar {
+        width: 100%;
+        height: 35px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--nav);
+        padding: 2px 25px;
+        display: flex;
+        align-items: center;
+        z-index: 99;
+        position: fixed;
+    }
+
+    .nav-bar .toggle-menu {
+        width: 26px;
+        height: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .toggle-menu span {
+        width: 18px;
+        height: 2px;
+        background-color: var(--primaryTextColor);
+        margin: 2px;
+    }
+
+
+    .side-menu {
+        width: 0;
+        height: calc(100% - 33px);
+        overflow: hidden;
+        top: 40px;
+        left: 0;
+        padding-top: 15px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        overscroll-behavior: contain;
+        padding-bottom: 20px;
+        top: 60px;
+        z-index: 9999999;
+    }
+
+    .side-menu.resize {
+        width: 250px;
+        border-right: 2px solid var(--primaryColor);
+        background-color: var(--darkNavBg);
+    }
+
+    .side-menu .menu-items {
+        padding: 0px 15px;
+    }
+
+    .side-menu a {
+        position: relative;
+        text-decoration: none;
+        color: var(--secondaryTextColor);
+        width: 100%;
+        height: 35px;
+        margin-top: 2px;
+        padding: 10px 20px;
+        border-radius: 35px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+    }
+
+    .side-menu a::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 0%;
+        height: 0px;
+        background-color: var(--secondaryColor);
+        border-radius: 35px;
+        z-index: -1;
+    }
+
+
+
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 25px;
+        margin-top: 15px;
+    }
+
+    .mobile-search .search-form {
+        width: auto;
+        height: 34px;
+        background-color: transparent;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        border: 0;
+        border-radius: 6px;
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-search .search-input {
+        width: 75%;
+        background-color: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 0 10px;
+        outline: 0;
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    .search-input:focus {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+        width: 95%;
+    }
+
+    .search-input:focus:hover {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+    }
+
+    .search-input:focus~.search-action {
+        background-color: var(--primaryColor);
+    }
+
+    .mobile-search .search-action {
+        background-color: var(--primaryColor);
+        cursor: pointer;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    @media (max-width: 768px) {
+        .side-menu.resize {
+            width: 250px;
+            left: 0;
+            border-right: 2px solid var(--primaryColor);
+            background-color: var(--darkNavBg);
+            -webkit-clip-path: circle(141.4% at 0 0);
+            clip-path: circle(141.4% at 0 0);
+        }
+
+        .side-menu {
+            position: fixed;
+            left: -250px;
+            width: 0;
+            z-index: 99;
+        }
+
+        .content.resize {
+            width: 100%;
+            float: none;
+        }
+    }
+
+
+    .youtube-button,
+    .external-link-button {
+        padding: 8px 8px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        color: #333;
+        font-size: 20px;
+        margin: 2px;
+        text-decoration: none;
+    }
+
+    .youtube-button:hover {
+        background-color: #ca3333;
+        color: #f2f2f2;
+    }
+
+    .external-link-button:hover {
+        background-color: #0b63b6;
+        color: #f2f2f2;
+    }
+
+    .nav-bar {
+        height: 10vh;
+        width: 100%;
+
+    }
+
+    /* .menu-items img {
+  border-radius: 50%;
+} */
+    .logout {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 8%;
+    }
+
+    .cart {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 15%;
+    }
+
+    .user {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 22%;
+    }
+
+    .card {
+        border-style: none;
+        position: relative;
+    }
+
+    /* .card{
+        position: relative;
+    }
+    .card-img-overlay{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+    } */
+    .first-row-outer {
+        margin-top: 10px;
+    }
+
+    .row .card {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .main-home {
+        display: flex;
+
+
+    }
+
+    .for-window {
+        width: 20%;
+        background-color: #000000;
+        height: 100vh;
+
+    }
+
+    .home-data {
+        width: 80%;
+        background-color: #0d0d0d;
+        height: 100%;
+    }
+
+
+    .for-window .opt {
+        height: 50px;
+    }
+
+    .op1 {
+        width: 250px;
+        height: 120px;
+        background-color: #1f1f29;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .options {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .stat {
+        display: flex;
+        height: 300px;
+        justify-content: space-evenly;
+    }
+
+    .stat1 {
+        width: 60%;
+        background-color: #1f1f29;
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+    }
+
+    .stat2 {
+        width: 35%;
+        background-color: #1f1f29;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 480px) {
+
+        .for-window h6 {
+            display: none;
+        }
+
+        .for-window {
+            position: fixed;
+     
+        }
+
+        .home-data {
+            padding-left: 40px;
+            width: 100%;
+
+
+
+        }
+
+        .home-data .op1 {
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column !important;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat1 {
+            width: 100%;
+            background-color: #1f1f29;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+          
+         
+        }
+
+        .stat2 {
+            width: 100%;
+            background-color: #1f1f29;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+            margin-top: 10px;
+        }
+       
+   
+
+
+
+    }
+
+
+    @media (min-width: 481px) and (max-width:767px) {
+        .for-window h6 {
+            display: none;
+        }
+
+        .for-window {
+            position: fixed;
+     
+        }
+
+        .home-data {
+            padding-left: 80px;
+            width: 100%;
+
+
+
+        }
+
+        .home-data .op1 {
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column !important;
+            justify-content: space-around;
+            margin-top: 80px;
+        }
+
+        .stat1 {
+            width: 100%;
+            background-color: #1f1f29;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+          
+         
+        }
+
+        .stat2 {
+            width: 100%;
+            background-color: #1f1f29;
+            border-radius: 10px;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+            margin-top: 10px;
+        }
+    
+    }
+
+
+
+    @media (min-width: 768px) and (max-width:991px) {
+        .home-data .op1 {
+            margin-bottom: 20px;
+        }
+         
+    }
+
+
+
+
+    @media (min-width: 992px) and (max-width:1199px) {
+        .home-data .op1 {
+            margin-bottom: 20px;
+        }
+        
+    }
+
+    @media (min-width: 1200px) and (max-width:1919px) {
+        .home-data .op1 {
+            margin-bottom: 20px;
+        }
+    }
+
+
+    @media (min-width: 1920px) {
+        .home-data .op1 {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+
+<body>
+    <div class="nav-bar  ">
+
+
+
+
+
+
+
+
+
+
+
+
+        <h3 style="font-family: 'Pacifico', cursive; color: #cccccc;">Altos Classified</h3>
+
+
+    </div>
+
+    <!-- <div class="main">
+        <div id="sideMenu" class="side-menu">
+            <div class="mobile-search">
+                <form class="d-flex">
+                    <input class="form-control mx-2 bg-dark text-light" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-secondary mx-1" type="submit">Search</button>
+                </form>
+            </div>
+
+        </div>
+    </div> -->
+    <br><Br>
+    <div class="first-row-outer ">
+
+        <!-- <div class="row row-cols-1 row-cols-md-2 first-row-inner mx-2 g-5">
+
+                <div class="col" >
+                    <div class="card   text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh; background-color: #731963">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_online_payments_re_y8f2.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Payment History</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'paymentdata' %}">Show</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_data_points_re_vkpq.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Seller Details</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;"
+                                    href="{%url 'showSellerData' %}">Show</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_data_re_80ws.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Buyer Details</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'showBuyerData' %}">Show</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_product_explainer_8jbm (1).svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Product Details</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'ProductData' %}">Show</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_add_post_re_174w.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Add main category</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'AddCategory' %}">Add</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_add_notes_re_ln36.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Add Sub category</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'AddSubCategory' %}">Add</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_add_notes_re_ln36.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Approve product</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'approve' %}">Add</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card bg-dark text-white "
+                        style="display: flex; flex-direction: row; width: 80%; height: 15vh;">
+                        <div class="" style="width: 40%;">
+                            <img src="{%static 'images/undraw_add_notes_re_ln36.svg'%}" style="height: 100px;"
+                                class="card-img" alt="...">
+                        </div>
+                        <div class="mt-2" style="width: 70%;">
+                            <h5 style="font-size: 2vw;" class="card-title">Feedback & Ratings</h5>
+                            <button class=" btn">
+                                <a style="text-decoration: none; color: white;" href="{%url 'feedback' %}">Add</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>-->
+
+
+
+        <div style="position: absolute; right:5%; top: 3%;z-index: 6000 ; position: fixed;">
+            <a type="button" class="btn  " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fa-regular fa-bell fa-xl text-light "></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                    {% with products_length=products|length sellers_length=sellers|length %}
+                   {{ products_length|add:sellers_length }} 
+                    {% endwith %}
+                </span>
+            </a>
+
+        </div>
+
+
+
+     <!-- Modal -->
+    <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog " style="position:absolute; right: 2%; top: 6%;">
+      <div class="modal-content " style="background-color: #0d0d0d;">
+        <div class="modal-header" style="border: #0b63b6; background-color: #1f1f29; ">
+          <h5 class="modal-title text-light" id="staticBackdropLabel">Notifications</h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <br>
+        <div class="modal-body text-light" style="border: #0b63b6; ">
+
+          {% for product in products reversed %}
+
+
+
+
+          <div style="display:flex; flex-direction: row;">
+            <div>
+              {% if product.seller.img %}
+              <img style="width: 60px; height: 60px;" src="{{product.seller.img.url}}">
+              {% else %}
+              <img style="width: 60px; height: 60px;" src="{% static 'images/logo.png' %}">
+              {% endif %}
+            </div>
+
+            <div class="ms-3">
+              <div>
+                <h5>{{product.user.username}}</h5>
+              </div>
+              <div>
+                <a class="text-light" style="text-decoration: none;" href="{% url 'approve_products' %}">
+                  <h6>Added a new product on {{product.Join_Date}}</h6>
+                </a>
+              </div>
+            </div>
+
+          </div>
+          <hr>
+
+
+          <br>
+
+
+
+          {% endfor %}
+
+
+          {% for seller in sellers reversed %}
+
+
+
+
+          <div style="display:flex; flex-direction: row;">
+            <div>
+              {% if seller.img %}
+              <img style="width: 60px; height: 60px;" src="{{seller.img.url}}">
+              {% else %}
+              <img style="width: 60px; height: 60px;" src="{% static 'images/logo.png' %}">
+              {% endif %}
+
+            </div>
+
+            <div class="ms-3">
+              <div>
+                <h5>{{seller.user.username}}</h5>
+              </div>
+              <div>
+                <a class="text-light" style="text-decoration: none;" href="{% url 'sellerapprove' %}">
+                  <h6>New seller registered on {{seller.Join_Date}}</h6>
+                </a>
+              </div>
+            </div>
+
+          </div>
+          <hr>
+
+
+          <br>
+
+
+
+          {% endfor %}
+
+
+        </div>
+        <div class="modal-footer" style="border: #0b63b6; ">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+        <div class="main-home">
+            <div class="for-window ">
+                <br><br>
+                <div class="ps-3 opt " style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'adminhome' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-house"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Dashbord</h6>
+                    </a>
+                </div>
+
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'sellerapprove' %}">
+                        <i style="color: #f2f2f2;" class="fa-regular fa-user"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Seller Approve</h6>
+                    </a>
+                </div>
+
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'approve_products' %}">
+                        <i style="color: #f2f2f2;" class="fa-brands fa-product-hunt"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Products Approve</h6>
+                    </a>
+                </div>
+
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'ProductData' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-bag-shopping"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Products</h6>
+                    </a>
+                </div>
+
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'showorderdata' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Orders</h6>
+                    </a>
+                </div>
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'showSellerData' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-shop"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Sellers</h6>
+                    </a>
+                </div>
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'showBuyerData' %}">
+                        <i style="color: #f2f2f2;" class="fa-regular fa-handshake"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;">Buyers</h6>
+                    </a>
+                </div>
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'AddCategory' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-square-plus"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;">Add Category</h6>
+                    </a>
+                </div>
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'AddSubCategory' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-square-plus"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;">Add SubCategory</h6>
+                    </a>
+                </div>
+                <div class="ps-3 opt" style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'paymentdata' %}">
+                        <i style="color: #f2f2f2;" class="fa-solid fa-credit-card"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;"> Transaction</h6>
+                    </a>
+                </div>
+                <div class="ps-3 opt " style="display: flex;color: #f2f2f2;">
+
+                    <a style="text-decoration: none; display: flex;" href="{% url 'feedback' %}">
+                        <i style="color: #f2f2f2;" class="fa-regular fa-message"></i>&nbsp;&nbsp;
+                        <h6 style="color: #f2f2f2;">Reviews</h6>
+                    </a>
+                </div>
+
+            </div>
+
+
+
+            <div class="home-data  ">
+                <br>
+                <h1 class="ps-3 mx-4" style="color:  #f2f2f2;">Dashbord</h1>
+                <h6 class="ps-3 mx-4" style="color:  #f2f2f2;">Whole data about your Altos</h6>
+                <br>
+                <div class="options ps-3 row row-cols-1 row-cols-md-2 mx-4">
+
+                    <div class="op1  ">
+
+                        <h3 style="color: #f2f2f2;"><i class="fa-solid fa-truck-fast"></i></h3> &nbsp;
+                        <h5 style="color: #f2f2f2;">Orders</h5>
+                    </div>
+
+                    <div class="op1  ">
+
+                        <h3 style="color: #f2f2f2;"><i class="fa-solid fa-qrcode"></i></h3> &nbsp;
+                        <h5 style="color: #f2f2f2;">Products</h5>
+                    </div>
+
+                    <div class="op1 ">
+
+                        <h3 style="color: #f2f2f2;"> <i class="fa-solid fa-shop"></i></h3> &nbsp;
+                        <h5 style="color: #f2f2f2;">Sellers</h5>
+                    </div>
+
+                    <div class="op1 ">
+
+                        <h3 style="color: #f2f2f2;"> <i class="fa-solid fa-credit-card"></i></h3> &nbsp;
+                        <h5 style="color: #f2f2f2;">Transaction</h5>
+                    </div>
+
+                </div>
+                <br><br>
+
+                <div class="stat  ps-3   mx-5  ">
+                    <div class="stat1">
+                        <br>
+                        <h5 style="color: #f2f2f2;" class="  ps-3">Sale Statics</h5>
+                        <img class="img-fluid" src="{%static 'images/download.png'%}">
+                    </div>
+                    <div class="stat2">
+                        <br>
+                        <h5 style="color: #f2f2f2;" class="  ps-3">Sale Statics</h5>
+                        <img class="img-fluid" src="{%static 'images/download (1).png'%}">
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- <div class="inner-div-1 mx-auto" style="display: flex; background-color: #c3b8ff; width: 400px;">
+            <div class="" style="width: 200px;"> <img height="100px" src="{%static 'images/undraw_online_payments_re_y8f2.svg'%}" class="card-img"
+                    alt="...">
+            </div>
+            <div class="" style="width: 200px;">
+                <div><h5 class="card-title">Payment History</h5></div>
+                <button
+                    style="background-image: linear-gradient(to right top, #731963, #5a1544, #3f122b, #240e17, #000000);"
+                    type="submit" class=" btn  text-light">
+                    <a style="text-decoration: none; color: white;" href="{%url 'showPaymentData' %}">Show</a>
+                </button>
+            </div>
+        </div> -->
+
+
+
+    <script>
+        const toggleMenu = document.getElementById("menuToggle");
+        const sideMenu = document.getElementById("sideMenu");
+        const content = document.querySelector(".content");
+        const bars = document.querySelectorAll(".bar");
+        const menuItems = document.querySelectorAll(".menu-items .item");
+
+        toggleMenu.addEventListener("click", () => {
+            sideMenu.classList.toggle("resize");
+            content.classList.toggle("resize");
+            toggleMenu.classList.toggle("active");
+
+            bars.forEach((bar) => {
+                bar.classList.add("anim-bar");
+                setTimeout(() => {
+                    bar.classList.remove("anim-bar");
+                }, 1000);
+            });
+        });
+        setTimeout(() => {
+            sideMenu.classList.add("resize");
+            content.classList.add("resize");
+            toggleMenu.classList.add("active");
+            bar.classList.add("anim-bar");
+        }, 1000);
+
+        menuItems.forEach(function (item) {
+            item.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+
+                menuItems.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+
+                this.classList.add("active");
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

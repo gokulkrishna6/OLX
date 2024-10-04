@@ -1,0 +1,728 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+    <title>Hello</title>
+</head>
+<style>
+      @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    body {
+        background-color: #191919;
+    }
+
+    .options {
+        width: 20%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+
+
+    .products-outer {
+        display: flex;
+        justify-content: center;
+    }
+
+    :root {
+
+
+        --primaryTextColor: #dcf4ff;
+
+        --bg: #000000;
+        --nav: #000000;
+        --darkNavBg: #000000;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    body {
+        /* background-image: url("{%static 'images/bg2.jpg'%}");
+background-attachment: fixed; */
+        background-size: 100%;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .nav-bar {
+        width: 100%;
+        height: 35px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--nav);
+        padding: 2px 25px;
+        display: flex;
+        align-items: center;
+        z-index: 99;
+    }
+
+    .nav-bar .toggle-menu {
+        width: 26px;
+        height: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .toggle-menu span {
+        width: 18px;
+        height: 2px;
+        background-color: var(--primaryTextColor);
+        margin: 2px;
+    }
+
+
+    .side-menu {
+        width: 0;
+        height: calc(100% - 33px);
+        overflow: hidden;
+        top: 40px;
+        left: 0;
+        padding-top: 15px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        overscroll-behavior: contain;
+        padding-bottom: 20px;
+        top: 60px;
+        z-index: 9999999;
+    }
+
+    .side-menu.resize {
+        width: 250px;
+        border-right: 2px solid var(--primaryColor);
+        background-color: var(--darkNavBg);
+    }
+
+    .side-menu .menu-items {
+        padding: 0px 15px;
+    }
+
+    .side-menu a {
+        position: relative;
+        text-decoration: none;
+        color: var(--secondaryTextColor);
+        width: 100%;
+        height: 35px;
+        margin-top: 2px;
+        padding: 10px 20px;
+        border-radius: 35px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+    }
+
+    .side-menu a::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 0%;
+        height: 0px;
+        background-color: var(--secondaryColor);
+        border-radius: 35px;
+        z-index: -1;
+    }
+
+
+
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 25px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #444b57;
+    }
+
+    .mobile-search .search-form {
+        width: auto;
+        height: 34px;
+        background-color: transparent;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        border: 0;
+        border-radius: 6px;
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-search .search-input {
+        width: 75%;
+        background-color: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 0 10px;
+        outline: 0;
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    .search-input:focus {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+        width: 95%;
+    }
+
+    .search-input:focus:hover {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+    }
+
+    .search-input:focus~.search-action {
+        background-color: var(--primaryColor);
+    }
+
+    .mobile-search .search-action {
+        background-color: var(--primaryColor);
+        cursor: pointer;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    @media (max-width: 768px) {
+        .side-menu.resize {
+            width: 250px;
+            left: 0;
+            border-right: 2px solid var(--primaryColor);
+            background-color: var(--darkNavBg);
+            -webkit-clip-path: circle(141.4% at 0 0);
+            clip-path: circle(141.4% at 0 0);
+        }
+
+        .side-menu {
+            position: fixed;
+            left: -250px;
+            width: 0;
+            z-index: 99;
+        }
+
+        .content.resize {
+            width: 100%;
+            float: none;
+        }
+    }
+
+
+    .youtube-button,
+    .external-link-button {
+        padding: 8px 8px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        color: #333;
+        font-size: 20px;
+        margin: 2px;
+        text-decoration: none;
+    }
+
+    .youtube-button:hover {
+        background-color: #ca3333;
+        color: #f2f2f2;
+    }
+
+    .external-link-button:hover {
+        background-color: #0b63b6;
+        color: #f2f2f2;
+    }
+
+
+
+    .top-image {
+        background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("{%static 'images/steptodown.com769504.jpg'%}");
+    height: 30rem;
+    background-position: center;
+    background-size: cover;
+    /* background-size: 100%; */
+    background-repeat: no-repeat;
+    position: relative;
+    }
+
+    .category {
+        position: absolute;
+        /* padding-top: 170px; */
+        top: 5%;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 9999999999999999999999;
+    }
+
+    .detail {
+        background-color: black;
+        display: flex;
+
+    }
+
+    .detail-text {
+        width: 50%;
+
+    }
+
+    .detail-image {
+        width: 50%;
+    }
+
+    .gallery1 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: black;
+    }
+
+    .gallery-outer {
+        background-color: black;
+    }
+
+    .top-text {
+        color: white;
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        z-index: 999999;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    section {
+        padding: 60px 0;
+        /* min-height: 100vh;*/
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .contact-area {
+        border-bottom: 1px solid #353C46;
+    }
+
+    .contact-content p {
+        font-size: 15px;
+        margin: 30px 0 60px;
+        position: relative;
+    }
+
+    .contact-content h6 {
+        color: #8b9199;
+        font-size: 15px;
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+
+    .contact-content span {
+        color: #353c47;
+        margin: 0 10px;
+    }
+
+    .contact-social {
+        margin-top: 30px;
+    }
+
+    .contact-social ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-social ul li a {
+        border: 1px solid #8b9199;
+        color: #8b9199;
+        display: inline-block;
+        height: 40px;
+        margin: 0 10px;
+        padding-top: 7px;
+
+        width: 40px;
+    }
+
+    .contact-content img {
+        max-width: 210px;
+    }
+
+    section,
+    footer {
+        background: #000000;
+        color: #868c96;
+    }
+
+    footer p {
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    footer img {
+        width: 44px;
+    }
+
+    @media (min-width: 100px) and (max-width: 1200px) {
+        .category {
+            display: none;
+
+        }
+
+        .category2 {
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    }
+
+
+    @media (min-width: 1200px) {
+        .category2 {
+            display: none;
+        }
+    }
+
+
+    @media (min-width: 1201px) and (max-width: 1300px) {
+        .category2 {
+            display: none;
+
+        }
+
+        .category {
+            position: absolute;
+            top: 0% !important;
+            left: 0%;
+        }
+
+    }
+
+    .nav-bar {
+        height: 10vh;
+        width: 100%;
+
+    }
+
+    .profile {
+        position: absolute;
+        top: 5%;
+        right: 3%;
+    }
+
+    /* .menu-items img {
+border-radius: 50%;
+} */
+    .logout {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 8%;
+    }
+
+    .cart {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 15%;
+    }
+
+    .user {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 22%;
+    }
+
+    .pro-cate {
+        width: 80%;
+
+        background-color: #000000;
+    }
+
+    .pro-cate .btn {
+        width: 100%;
+    }
+
+    .products {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .options {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .products {
+        width: 90vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+ 
+    }
+
+    .card {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 3%;
+
+    }
+
+    .card .buynow {
+        border-radius: 0% 0% 5% 5%;
+    }
+
+    .fa-star {
+        color: #ca3333;
+    }
+</style>
+
+<body>
+    <div class="nav-bar  ">
+        <div id="menuToggle" class="toggle-menu active">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+
+          <h3 class="ps-2" style="
+    background-image:linear-gradient(to right top, #731963, #5a1544, #3f122b  );
+    -webkit-background-clip: text;
+     background-clip: text;
+     color: transparent; font-family: 'Pacifico', cursive;">Altos Classified</h3>
+
+    </div>
+
+    <div class="main">
+        <div id="sideMenu" class="side-menu">
+   
+            <div class="menu-items mx-auto">
+                <!-- {% if users.img %}
+              
+              {% else %}
+              
+              {% endif %} -->
+                <a href="#" class="item">{{users.user.first_name}} {{users.user.last_name}}</a>
+                <a href="#" class="item">{{users.Join_Date}}</a>
+
+                <div class="cart text-light bg-secondary text-center">
+                    <a href="{% url 'cart' user.id %}" class="pt-1 mx-2">Cart</a>
+                </div>
+                <div class="logout text-light bg-secondary text-center">
+                    <a href="{%url 'logout'%}" class="pt-1 mx-1">Logout</a>
+                </div>
+                <div class="user text-light bg-secondary text-center">
+                    <a href="{% url 'UserProfile' user.id %}" class="pt-1 mx-1">Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-image">
+            <!-- <img class="img-fluid" style="width:100%; height:20rem;" src="{%static 'images/watch1.jpg'%}"> -->
+        </div>
+
+        <div class="products-outer pt-3">
+    
+
+
+            <!-- <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-4 g-5 mx-auto mt-1">
+        {% for p in products %}
+        <div class="col h-25">
+          <div class="card w-100 " style="border-style: none; background-color: black;">
+            {% for image in images %}
+            <img src="{{image.image.url}}" style="height: 150px;" class="card-img-top img-fluid" alt="..">
+            {% endfor %}
+            <div class="card-body" style="background-color: black;">
+              <h5 class="card-title text-center text-light">{{p.Product_Name}}</h5>
+              <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p>
+              <h5 class="card-text text-center text-light">$ {{p.Product_Price}}</h5>
+            <div class="text-center">
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star-o" aria-hidden="true"></i>
+            </div>
+            </div>
+            <div class="w-100 bg-secondary text-center buynow pt-2" style="height: 40px;" >
+              <a style=" text-decoration: none; color: #fff;" href="{% url 'ProductDetail' p.id%}">Buy Now</a></div>
+          </div>
+          
+        </div>
+      </div>
+      {% endfor %} -->
+            <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-4 g-5 mx-auto mt-1  ">
+                {% for p in products %}
+                <div class="col  ">
+                    <div class="card w-100  " style="border-style: none; background-color: black;">
+
+                        {% if p.productimage_set.all %}
+                        <img style="width: 300px; height: 150px;" src="{{ p.productimage_set.first.image.url }}">
+                        {% else %}
+                        <img style="width: 300px; height: 150px;" src="{% static 'images/image2.jpg' %}">
+                        {% endif %}
+
+                        <div class="card-body" style="background-color: black;">
+                            <h5 class="card-title text-center text-light">{{p.Product_Name}}</h5>
+                            <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                            <h5 class="card-text text-center text-light">$ {{p.Product_Price}}</h5>
+                            <div class="text-center">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                            <a style="text-decoration: none;" href="{% url 'ProductDetail' p.id %}">
+                                <h5 class="text-light">Buy Now</h5>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <br><br><br><br><br><br>
+    <section class="contact-area" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="contact-content text-center">
+                        <p>China |
+                            India |
+                            United States |
+                            Indonesia |
+                            Pakistan |
+                            Brazil |
+                            Nigeria |
+                            Bangladesh |
+                            Russia |
+                            Mexico </p>
+
+                        <div class="contact-social">
+                            <ul>
+                                <li><a class="hover-target" href=""><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-instagram"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-whatsapp"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>Copyright &copy; 2023 Altos Technologies</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const toggleMenu = document.getElementById("menuToggle");
+          const sideMenu = document.getElementById("sideMenu");
+          const content = document.querySelector(".content");
+          const bars = document.querySelectorAll(".bar");
+          const menuItems = document.querySelectorAll(".menu-items .item");
+    
+    
+          const isMenuOpen = localStorage.getItem("isMenuOpen");
+    
+    
+          if (isMenuOpen === "true") {
+            sideMenu.classList.add("resize");
+            content.classList.add("resize");
+            toggleMenu.classList.add("active");
+          }
+    
+          toggleMenu.addEventListener("click", () => {
+            sideMenu.classList.toggle("resize");
+            content.classList.toggle("resize");
+            toggleMenu.classList.toggle("active");
+    
+    
+            localStorage.setItem("isMenuOpen", sideMenu.classList.contains("resize"));
+          });
+    
+          bars.forEach((bar) => {
+            bar.addEventListener("transitionend", () => {
+              bar.classList.remove("anim-bar");
+            });
+          });
+    
+    
+          setTimeout(() => {
+            bars.forEach((bar) => {
+              bar.classList.add("anim-bar");
+            });
+          }, 1000);
+    
+    
+          menuItems.forEach(function (item) {
+            item.addEventListener("click", function (event) {
+              event.preventDefault();
+    
+              menuItems.forEach(function (menuItem) {
+                menuItem.classList.remove("active");
+              });
+    
+              this.classList.add("active");
+            });
+          });
+        });
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

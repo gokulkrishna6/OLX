@@ -1,0 +1,1275 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+  <title>Hello, world!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+
+  body {
+    background-color: #000000;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+  }
+
+
+
+  .nav-bar {
+    width: 100%;
+    height: 35px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000000;
+    padding: 2px 25px;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+  }
+
+  .nav-bar .toggle-menu {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .toggle-menu span {
+    width: 18px;
+    height: 2px;
+    background-color: #dcf4ff;
+    ;
+    margin: 2px;
+  }
+
+
+  .side-menu {
+    width: 0;
+    height: calc(100% - 33px);
+    border-right: 0px solid transparent;
+    overflow: hidden;
+    top: 40px;
+    left: 0;
+    padding-top: 15px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    overscroll-behavior: contain;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    top: 60px;
+    z-index: 9999999;
+  }
+
+  .side-menu.resize {
+    width: 250px;
+
+    background-color: #000000;
+  }
+
+  .side-menu .menu-items {
+    padding: 0px 15px;
+  }
+
+  .side-menu a {
+    position: relative;
+    text-decoration: none;
+
+    width: 100%;
+    height: 35px;
+    margin-top: 2px;
+    padding: 10px 20px;
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow: hidden;
+  }
+
+  .side-menu a::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 0%;
+    height: 0px;
+
+    border-radius: 35px;
+    z-index: -1;
+  }
+
+
+
+  .mobile-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 25px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #444b57;
+  }
+
+  .mobile-search .search-form {
+    width: auto;
+    height: 34px;
+    background-color: transparent;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+    border-radius: 6px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+
+
+
+  .mobile-search .search-action {
+
+    cursor: pointer;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 0px 5px 5px 0px;
+  }
+
+  @media (max-width: 768px) {
+    .side-menu.resize {
+      width: 250px;
+      left: 0;
+
+      background-color: #000000;
+      -webkit-clip-path: circle(141.4% at 0 0);
+      clip-path: circle(141.4% at 0 0);
+    }
+
+    .side-menu {
+      position: fixed;
+      left: -250px;
+      width: 0;
+      z-index: 99;
+    }
+
+    .content.resize {
+      width: 100%;
+      float: none;
+    }
+  }
+
+  .top-image {
+
+    background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("{%static 'images/steptodown.com898151.jpg'%}");
+    height: 30rem;
+    background-position: top;
+    background-size: cover;
+    /* background-size: 100%; */
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  .gallery-outer {
+    background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("{%static 'images/steptodown.com312708.jpg'%}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .category {
+    position: absolute;
+    /* padding-top: 170px; */
+    bottom: 0%;
+    left: 0;
+    top: 35%;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999;
+  }
+
+
+  .detail {
+    background-color: black;
+    display: flex;
+
+  }
+
+  .detail-text {
+    width: 50%;
+
+  }
+
+  .detail-image {
+    width: 50%;
+  }
+
+  .gallery1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+
+
+  .top-text {
+    color: white;
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    z-index: 999999;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  section {
+    padding: 60px 0;
+    /* min-height: 100vh;*/
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-area {
+    border-bottom: 1px solid #353C46;
+  }
+
+  .contact-content p {
+    font-size: 15px;
+    margin: 30px 0 60px;
+    position: relative;
+  }
+
+  .contact-content h6 {
+    color: #8b9199;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .contact-content span {
+    color: #353c47;
+    margin: 0 10px;
+  }
+
+  .contact-social {
+    margin-top: 30px;
+  }
+
+  .contact-social ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-social ul li a {
+    border: 1px solid #8b9199;
+    color: #8b9199;
+    display: inline-block;
+    height: 40px;
+    margin: 0 10px;
+    padding-top: 7px;
+
+    width: 40px;
+  }
+
+  .contact-content img {
+    max-width: 210px;
+  }
+
+  section,
+  footer {
+    background: #000000;
+    color: #868c96;
+  }
+
+  footer p {
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  footer img {
+    width: 44px;
+  }
+
+
+
+
+  @media (min-width: 1200px) {
+    .category2 {
+      display: none;
+    }
+  }
+
+
+
+  .nav-bar {
+    height: 10vh;
+    position: fixed;
+    z-index: 9999999999999;
+  }
+
+  /* .d-flex{
+    position: absolute;
+    right: 2%;
+    top: 13%;
+  } */
+
+
+  .profile {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+  }
+
+  /* .menu-items img {
+  border-radius: 50%;
+} */
+  .login {
+    width: 40%;
+    height: 30px;
+    border-radius: 30px;
+    position: absolute;
+    left: 30%;
+    bottom: 8%;
+  }
+
+  .reg {
+    width: 40%;
+    height: 30px;
+    border-radius: 30px;
+    position: absolute;
+    left: 30%;
+    bottom: 15%;
+  }
+
+  .home {
+    width: 40%;
+    height: 35px;
+    border-radius: 30px;
+    position: absolute;
+    left: 30%;
+    bottom: 10%;
+  }
+
+  .home2 {
+    width: 40%;
+    height: 35px;
+    border-radius: 30px;
+    position: absolute;
+    left: 30%;
+    bottom: 30%;
+  }
+
+  .home3 {
+    width: 40%;
+    height: 35px;
+    border-radius: 30px;
+    position: absolute;
+    left: 30%;
+    bottom: 20%;
+  }
+
+  .buy-cart {
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .buy-cart button {
+    width: 100vw;
+  }
+
+  .card-body a {
+    text-decoration: none;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+  .text-info {
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  .category .card {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .prod-1 .card {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .category2 .card {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .Featured .card {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+
+  }
+
+  .feat .card {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .dropdown1 button {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .dropdown2 button {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .home {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+  }
+
+
+
+  .category .card {
+    background-color: #bfbfbf;
+  }
+
+  .category2 .card {
+    background-color: #bfbfbf;
+  }
+
+
+  @media (max-width: 480px) {
+    .category {
+      display: none;
+
+    }
+ 
+  }
+
+
+  @media (min-width: 481px) and (max-width:767px) {
+    .category {
+      display: none;
+
+    }
+
+    .top-image {
+      position: relative;
+    }
+
+
+
+
+
+
+  }
+
+
+
+  @media (min-width: 768px) and (max-width:991px) {
+    .category {
+      display: none;
+
+    }
+
+    .top-image {
+      position: relative;
+    }
+
+  }
+
+
+
+
+  @media (min-width: 992px) and (max-width:1199px) {
+    .top-image {
+      position: relative;
+    }
+
+    .category {
+      position: absolute;
+      /* padding-top: 170px; */
+      bottom: 0%;
+      left: 0;
+      top: 60%;
+      right: 0;
+
+      display: flex;
+
+      justify-content: center;
+
+      z-index: 999;
+
+
+
+    }
+
+    .category2 {
+      display: none;
+    }
+
+
+  }
+
+  @media (min-width: 1200px) and (max-width:1500px) {
+    .category2 {
+      display: none;
+
+    }
+
+    .category {
+      position: absolute;
+      /* padding-top: 170px; */
+      bottom: 0%;
+      left: 0;
+      top: 23%;
+      right: 0;
+
+      display: flex;
+
+      justify-content: center;
+
+      z-index: 999;
+
+
+    }
+  }
+
+
+  @media (min-width: 1920px) {
+    .category2 {
+      display: none;
+
+    }
+
+    .category {
+      position: absolute;
+      /* padding-top: 170px; */
+      bottom: 0%;
+      left: 0;
+      top: 0%;
+      right: 0;
+
+      display: flex;
+
+      justify-content: center;
+
+      z-index: 999;
+
+
+    }
+
+  }
+</style>
+
+
+<body>
+
+  <div class="nav-bar  ">
+
+    <div id="menuToggle" class="toggle-menu active">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <!-- <form class="d-flex bg-dark">
+      <input class="form-control mr-2 bg-dark" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-secondary mx-2" type="submit">Search</button>
+    </form> -->
+    <h3 class="ps-2" style="
+    background-image:linear-gradient(to right top, #731963, #5a1544, #3f122b  );
+    -webkit-background-clip: text;
+     background-clip: text;
+     color: transparent; font-family: 'Pacifico', cursive;">Altos Classified</h3>
+
+
+  </div>
+
+  <div class="main">
+
+    <div id="sideMenu" class="side-menu">
+
+
+
+      <div class="menu-items">
+
+        <div class="home  bg-secondary ">
+          <a class="text-light text-center" href="" class="pt-1 "> &nbsp;&nbsp;Home</a>
+        </div>
+        <div class="home2  bg-secondary ">
+          <a class="text-light text-center" href="{% url 'SellRegPage' %}" class="pt-1 "> &nbsp;&nbsp;Register</a>
+        </div>
+        <div class="home3  bg-secondary ">
+          <a class="text-light text-center" href="{% url 'SellerLoginPage' %}" class="pt-1 "> &nbsp;&nbsp;Login</a>
+        </div>
+    
+        <!-- <div class="dropdown2 text-light bg-secondary text-center">
+          <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Seller
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark text-light bg-secondary text-center"
+            aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="{% url 'SellRegPage' %}">Register</a></li>
+            <li><a class="dropdown-item" href="{% url 'SellerLoginPage' %}">Login</a></li>
+          </ul>
+        </div> -->
+
+        <!-- <div class="dropdown1 text-light bg-secondary text-center">
+          <button class="btn btn-secondary " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Buyer
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark text-light bg-secondary text-center"
+            aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="{% url 'registration' %}">Register</a></li>
+            <li><a class="dropdown-item" href="{% url 'userLogin' %}">Login</a></li>
+          </ul>
+        </div> -->
+
+      </div>
+
+    </div>
+
+    <!-- <div class="content">
+      <div class="top-text">
+      <h1 style="font-size: 4vw; opacity: 0.5;">Buy & Sell<br> Anything, Anywhere</h1>
+    </div> -->
+    <div style="background: linear-gradient(to top, #000000, #191919,#000000)">
+
+      <div class="category">
+        <div class="row row-cols-2 row-cols-md-6 mx-4">
+          <div class="col">
+            <div class="card h-75 w-100">
+
+              <i class="fa fa-car fa-2xl text-center mt-4" aria-hidden="true"></i>
+
+              <!-- <img src="..." class="card-img-top" alt="..."> -->
+              <div class="card-body">
+                <h5 class="card-title text-center mt-1 "><a class="text-dark" href="">Car's</a></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-75 w-100">
+              <i class="fa fa-motorcycle fa-2xl text-center mt-4" aria-hidden="true"></i>
+              <div class="card-body ">
+                <h5 class="card-title text-center mt-1 "><a class="text-dark" href="">Bike's</a></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+
+
+            <div class="card h-75 w-100 ">
+              <i class="fa fa-paw fa-2xl text-center mt-4" aria-hidden="true"></i>
+              <div class="card-body">
+                <h5 class="card-title text-center mt-1"><a class="text-dark" href=""> &nbsp;Pets &nbsp;</a></h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card h-75 w-100 ">
+              <i class="fa fa-book fa-2xl text-center mt-4" aria-hidden="true"></i>
+              <div class="card-body">
+                <h5 class="card-title text-center mt-1"><a class="text-dark" href="">Book's &nbsp;</a></h5>
+
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-75 w-100 ">
+              <i class="fa fa-clock-o fa-2xl text-center mt-4" aria-hidden="true"></i>
+              <div class="card-body">
+                <h5 class="card-title text-center mt-1"><a class="text-dark" href="">Watch</a></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-75 w-100">
+              <i class="fa fa-home fa-2xl text-center mt-4" aria-hidden="true"></i>
+              <div class="card-body">
+                <h5 class="card-title text-center "><a class="text-dark" href="">Real Estate</a></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-image d-flex  justify-content-center flex-column">
+        <!-- <img class="img-fluid" style="width:100%; height:20rem;" src="{%static 'images/watch1.jpg'%}"> -->
+        <br><br><br><br>
+        <h1 style="color: #fff; opacity: 0.3; " class="  ps-4 ">BUY AND SELL ANYTHING</h1>
+        <p style="color: #fff; opacity: 0.3; " class=" ps-4  ">BUY AND SELL ANYTHING</p>
+      </div>
+
+      <div class="category2">
+        <div class="cat-grad" style="background: linear-gradient(to top, #000000, #191919 ,#000000)">
+          <br><br><br>
+          <div class="row row-cols-2 row-cols-md-6 mx-4">
+            <div class="col">
+              <div class="card h-75 w-100">
+
+                <i class="fa fa-car fa-2xl text-center mt-4" aria-hidden="true"></i>
+
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                  <h5 class="card-title text-center mt-1 "><a class="text-dark" href="">Car's</a></h5>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-75 w-100">
+                <i class="fa fa-motorcycle fa-2xl text-center mt-4" aria-hidden="true"></i>
+                <div class="card-body ">
+                  <h5 class="card-title text-center mt-1 "><a class="text-dark" href="">Bike's</a></h5>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-75 w-100">
+
+                <i class="fa fa-paw fa-2xl text-center mt-4" aria-hidden="true"></i>
+                <div class="card-body">
+                  <h5 class="card-title text-center mt-1"><a class="text-dark" href=""> &nbsp;Pets &nbsp;</a></h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-75 w-100">
+                <i class="fa fa-book fa-2xl text-center mt-4" aria-hidden="true"></i>
+                <div class="card-body">
+                  <h5 class="card-title text-center mt-1"><a class="text-dark" href="">Book's &nbsp;</a></h5>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-75 w-100 ">
+                <i class="fa fa-clock-o fa-2xl text-center mt-4" aria-hidden="true"></i>
+                <div class="card-body">
+                  <h5 class="card-title text-center mt-1"><a class="text-dark" href="">Watches</a></h5>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-75 w-100">
+                <i class="fa fa-home fa-2xl text-center mt-4" aria-hidden="true"></i>
+                <div class="card-body">
+                  <h5 class="card-title text-center "><a class="text-dark" href="">Real Estate</a></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div style="background: linear-gradient(to top, #000000, #191919,#191919,#000000)">
+        <div class="prod-1">
+          <br><br><br><br>
+          <div class="text-light text-center">
+            <h2 style="color: #bfbfbf;">Recommend Products</h2>
+          </div>
+
+
+          <div>
+
+            <center>
+              <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-3 w-75 g-5  mt-1">
+                {% for p in products|slice:"6" %}
+                <div class="col  ">
+                  <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                    <center>
+                      {% if p.productimage_set.all %}
+                      <img style="width: 300px; height: 150px;" src="{{ p.productimage_set.first.image.url }}">
+                      {% else %}
+                      <img style="width: 300px; height: 150px;" src="{% static 'images/image2.jpg' %}">
+                      {% endif %}
+                    </center>
+                    <div class="card-body" style="background-color: black;">
+                      <h5 class="card-title text-center text-light">{{p.Product_Name}}</h5>
+                      <!-- <p class="card-text text-center text-secondary">{{p.Product_Discription}}</p> -->
+                      <h5 class="card-text text-center text-light">$ {{p.Product_Price}}</h5>
+                      <div class="text-center">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                      <a style="text-decoration: none;" href="{% url 'userLogin' %}">
+                        <h5 class="text-light">Buy Now</h5>
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                {% endfor %}
+
+
+              </div>
+
+            </center>
+
+          </div>
+
+        </div>
+
+
+        <br><br><br><br><br><br><br>
+      </div>
+
+
+      <div class="detail">
+
+        <div class="detail-text text-light text-center mt-3">
+          <h2 style="font-size:6vw; color: #bfbfbf">Selling Made Simple</h2><br>
+          <p style="font-size: 2vw; color:  #999999" class="text-fluid">List your items on our platform and reach a
+            large
+            audience of potential buyers</p>
+          <!-- You're in the right place!  -->
+        </div>
+        <div class="detail-image mt-3">
+          <img class="img-fluid" src="{%static 'images/01-Hero.jpg'%}" style="width: 40vw;">
+        </div>
+      </div>
+
+
+
+
+
+
+      <div style="background: linear-gradient(to top, #000000, #191919,#191919,#000000)">
+        <div class="prod-1">
+          <br><br><br><br>
+          <div class="text-light text-center">
+            <h2 style="color: #bfbfbf;">Featured Category</h2>
+          </div>
+
+
+          <div>
+
+            <center>
+              <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-3 w-75 g-5  mt-1">
+
+                <div class="col  ">
+                  <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                    <center>
+
+
+
+                      <img style="width: 350px; height: 150px;" src="{%static 'images/03.jpg'%}">
+
+                    </center>
+                    <div class="card-body" style="background-color: black;">
+                      <h5 class="card-title text-center text-light"> </h5>
+                      <h5 class="card-title text-center text-light">GYM</h5>
+                      <p class="card-text text-center text-secondary text-secondary">Something Big is Coming Your Way
+                      </p>
+                      <h5 class="card-text text-center text-light"> </h5>
+                      <div class="text-center">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                      <a style="text-decoration: none;" href=" ">
+                        <h5 class="text-light">Comming Soon</h5>
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col  ">
+                  <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                    <center>
+
+
+
+                      <img style="width: 350px; height: 150px;" src="{%static 'images/04.jpg'%}">
+
+                    </center>
+                    <div class="card-body" style="background-color: black;">
+                      <h5 class="card-title text-center text-light">Hotel Booking</h5>
+                      <p class="card-text text-center text-secondary text-secondary">Something Big is Coming Your Way
+                      </p>
+                      <h5 class="card-text text-center text-light"> </h5>
+                      <div class="text-center">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                      </div>
+                    </div>
+
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                      <a style="text-decoration: none;" href=" ">
+                        <h5 class="text-light">Comming Soon</h5>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col  ">
+                  <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                    <center>
+
+
+
+                      <img style="width: 350px; height: 150px;" src="{%static 'images/01.jpg'%}">
+
+                    </center>
+                    <div class="card-body" style="background-color: black;">
+                      <h5 class="card-title text-center text-light">Beverage</h5>
+                      <p class="card-text text-center text-secondary text-secondary">Something Big is Coming Your Way
+                      </p>
+                      <h5 class="card-text text-center text-light"> </h5>
+                      <div class="text-center">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                      <a style="text-decoration: none;" href=" ">
+                        <h5 class="text-light">Comming Soon</h5>
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+
+
+
+
+
+          </div>
+
+
+          </center>
+
+        </div>
+
+        <br><br><br><br><br><br><br><br>
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <div class="gallery-outer ">
+      <!-- <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 160" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(115, 25, 99, 1)" offset="0%"></stop><stop stop-color="rgba(0, 0, 0, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,80L60,64L120,0L180,48L240,48L300,16L360,96L420,80L480,48L540,0L600,64L660,128L720,0L780,96L840,64L900,144L960,48L1020,48L1080,64L1140,128L1200,80L1260,16L1320,80L1380,80L1440,64L1440,160L1380,160L1320,160L1260,160L1200,160L1140,160L1080,160L1020,160L960,160L900,160L840,160L780,160L720,160L660,160L600,160L540,160L480,160L420,160L360,160L300,160L240,160L180,160L120,160L60,160L0,160Z"></path></svg> -->
+      <br>
+      <div class="text-light text-center gallery1">
+        <h2 style="color: #bfbfbf;" class="text-fluid">Most Popular Locations</h2>
+      </div>
+
+      <div class="gallery1 mt-5  mx-2">
+        <div>
+          <img src="{%static 'images/011.jpg'%}" class="img-fluid">
+        </div>
+
+        <div class="ps-4">
+          <img src="{%static 'images/022.jpg'%}" class="img-fluid">
+        </div>
+      </div>
+      <div class="gallery1 mt-4 mx-2">
+        <div>
+          <img src="{%static 'images/022.jpg'%}" class="img-fluid">
+        </div>
+
+        <div class=" ps-4">
+          <img src="{%static 'images/011.jpg'%}" class="img-fluid">
+        </div>
+      </div>
+
+      <br><br><br>
+    </div>
+
+    <div style=" background: 
+    linear-gradient(to bottom, #000000, #191919,#000000 100%) ">
+      <br><br><br><Br><Br>
+      <div class="text-light text-center">
+        <h2 style="color: #bfbfbf;">Featured Products</h2>
+      </div><br>
+      <div>
+
+        <center>
+          <div class="row products row-cols-1 row-cols-md-3 row-cols-lg-3 w-75 g-5  mt-1">
+
+            <div class="col  ">
+              <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                <center>
+
+
+
+                  <img style="width: 300px; height: 150px;" src="{%static 'images/pngwing.com (30).png'%}">
+
+                </center>
+                <div class="card-body" style="background-color: black;">
+                  <h5 class="card-title text-center text-light"> </h5>
+                  <h5 class="card-title text-center text-light">Ferrari 599XX</h5>
+                  <p class="card-text text-center text-secondary text-secondary">Something Big is Coming Your Way</p>
+                  <h5 class="card-text text-center text-light"> </h5>
+                  <div class="text-center">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                  <a style="text-decoration: none;" href=" ">
+                    <h5 class="text-light">Comming Soon</h5>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+            <div class="col  ">
+              <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                <center>
+
+
+
+                  <img style="width: 300px; height: 150px;" src="{%static 'images/pngwing.com (31).png'%}">
+
+                </center>
+                <div class="card-body" style="background-color: black;">
+                  <h5 style="color: #cccccc;" class="card-title text-center text-light">BMW S1000RR </h5>
+                  <p class="card-text text-center text-secondary text-secondary">Something Big is Coming Your Way</p>
+                  <h5 class="card-text text-center text-light"> </h5>
+                  <div class="text-center">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                  <a style="text-decoration: none;" href=" ">
+                    <h5 class="text-light">Comming Soon</h5>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col  ">
+              <div class="card w-100 h-100 " style="border-style: none; background-color: black;">
+                <center>
+
+
+
+                  <img style="width: 300px; height: 150px;" src="{%static 'images/pngwing.com (32).png'%}">
+
+                </center>
+                <div class="card-body" style="background-color: black;">
+                  <h5 class="card-title text-center text-light">Rolex</h5>
+                  <p class="card-text text-center text-secondary text-secondary">Something Big is Coming Your Way</p>
+                  <h5 class="card-text text-center text-light"> </h5>
+                  <div class="text-center">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+
+
+                <div class="w-100  text-center buynow pt-2" style="height: 40px; background-color:#1f1f29;">
+                  <a style="text-decoration: none;" href=" ">
+                    <h5 class="text-light">Comming Soon</h5>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+
+
+
+
+      </div>
+
+
+      </center>
+
+      <br><br><br><br><br><br><br><br>
+
+    </div>
+
+  </div>
+
+
+
+  </div>
+
+  </div>
+
+
+  <section class="contact-area" id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="contact-content text-center">
+            <p>China |
+              India |
+              United States |
+              Indonesia |
+              Pakistan |
+              Brazil |
+              Nigeria |
+              Bangladesh |
+              Russia |
+              Mexico </p>
+
+            <div class="contact-social">
+              <ul>
+                <li><a class="hover-target" href=""><i class="fab fa-facebook-f"></i></a></li>
+                <li><a class="hover-target" href=""><i class="fab fa-instagram"></i></a></li>
+                <li><a class="hover-target" href=""><i class="fab fa-whatsapp"></i></a></li>
+                <li><a class="hover-target" href=""><i class="fab fa-twitter"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <p class="text-fluid">Copyright &copy; 2023 Altos Technologies</p>
+  </footer>
+
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleMenu = document.getElementById("menuToggle");
+      const sideMenu = document.getElementById("sideMenu");
+      const content = document.querySelector(".content");
+      const bars = document.querySelectorAll(".bar");
+      const menuItems = document.querySelectorAll(".menu-items .item");
+
+
+      const isMenuOpen = localStorage.getItem("isMenuOpen");
+
+
+      if (isMenuOpen === "true") {
+        sideMenu.classList.add("resize");
+        content.classList.add("resize");
+        toggleMenu.classList.add("active");
+      }
+
+      toggleMenu.addEventListener("click", () => {
+        sideMenu.classList.toggle("resize");
+        content.classList.toggle("resize");
+        toggleMenu.classList.toggle("active");
+
+
+        localStorage.setItem("isMenuOpen", sideMenu.classList.contains("resize"));
+      });
+
+      bars.forEach((bar) => {
+        bar.addEventListener("transitionend", () => {
+          bar.classList.remove("anim-bar");
+        });
+      });
+
+
+      setTimeout(() => {
+        bars.forEach((bar) => {
+          bar.classList.add("anim-bar");
+        });
+      }, 1000);
+
+
+      menuItems.forEach(function (item) {
+        item.addEventListener("click", function (event) {
+          event.preventDefault();
+
+          menuItems.forEach(function (menuItem) {
+            menuItem.classList.remove("active");
+          });
+
+          this.classList.add("active");
+        });
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

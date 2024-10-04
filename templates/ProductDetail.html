@@ -1,0 +1,1071 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2a2f1ba69e.js" crossorigin="anonymous"></script>
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    :root {
+
+        --primaryTextColor: #dcf4ff;
+
+        --bg: #000000;
+        --nav: #000000;
+        --darkNavBg: #000000;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    body {
+
+        background-image: linear-gradient(to right, #000, #191919, #191919, #191919, #000);
+
+
+    }
+
+    body {
+        background-color: #000;
+    }
+
+    .nav-bar {
+        width: 100%;
+        height: 35px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: var(--nav);
+        padding: 2px 25px;
+        display: flex;
+        align-items: center;
+        z-index: 99;
+    }
+
+    .nav-bar .toggle-menu {
+        width: 26px;
+        height: 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .toggle-menu span {
+        width: 18px;
+        height: 2px;
+        background-color: var(--primaryTextColor);
+        margin: 2px;
+    }
+
+
+    .side-menu {
+        width: 0;
+        height: calc(100% - 33px);
+        border-right: 0px solid transparent;
+        overflow: hidden;
+        top: 40px;
+        left: 0;
+        padding-top: 15px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        overscroll-behavior: contain;
+        overflow-y: auto;
+        padding-bottom: 20px;
+        top: 60px;
+        z-index: 9999999;
+    }
+
+    .side-menu.resize {
+        width: 250px;
+        border-right: 2px solid var(--primaryColor);
+        background-color: var(--darkNavBg);
+    }
+
+    .side-menu .menu-items {
+        padding: 0px 15px;
+    }
+
+    .side-menu a {
+        position: relative;
+        text-decoration: none;
+        color: var(--secondaryTextColor);
+        width: 100%;
+        height: 35px;
+        margin-top: 2px;
+        padding: 10px 20px;
+        border-radius: 35px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+    }
+
+    .side-menu a::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 0%;
+        height: 0px;
+        background-color: var(--secondaryColor);
+        border-radius: 35px;
+        z-index: -1;
+    }
+
+    .side-menu a.active::after {
+        background: linear-gradient(45deg,
+                var(--secondaryColor),
+                var(--primaryColor));
+        width: 100%;
+        height: 100%;
+        bottom: 0px;
+        border-radius: 35px;
+        left: 0;
+        transform: skewX(0);
+        animation: active 0.2s ease;
+    }
+
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 25px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #444b57;
+    }
+
+    .mobile-search .search-form {
+        width: auto;
+        height: 34px;
+        background-color: transparent;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        border: 0;
+        border-radius: 6px;
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-search .search-input {
+        width: 75%;
+        background-color: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 0 10px;
+        outline: 0;
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    .search-input:focus {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+        width: 95%;
+    }
+
+    .search-input:focus:hover {
+        border: 1px solid var(--primaryColor);
+        box-shadow: inset 0 0 5px #8773fc3b;
+    }
+
+    .search-input:focus~.search-action {
+        background-color: var(--primaryColor);
+    }
+
+    .mobile-search .search-action {
+        background-color: var(--primaryColor);
+        cursor: pointer;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    @media (max-width: 768px) {
+        .side-menu.resize {
+            width: 250px;
+            left: 0;
+            border-right: 2px solid var(--primaryColor);
+            background-color: var(--darkNavBg);
+            -webkit-clip-path: circle(141.4% at 0 0);
+            clip-path: circle(141.4% at 0 0);
+        }
+
+        .side-menu {
+            position: fixed;
+            left: -250px;
+            width: 0;
+            z-index: 99;
+        }
+
+        .content.resize {
+            width: 100%;
+            float: none;
+        }
+    }
+
+    .top-image {
+
+        position: relative;
+    }
+
+    .category {
+        position: absolute;
+        /* padding-top: 170px; */
+        top: 5%;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 9999999999999999999999;
+    }
+
+    .detail {
+        background-color: black;
+        display: flex;
+
+    }
+
+    .detail-text {
+        width: 50%;
+
+    }
+
+    .detail-image {
+        width: 50%;
+    }
+
+    .gallery1 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: black;
+    }
+
+    .gallery-outer {
+        background-color: black;
+    }
+
+    .top-text {
+        color: white;
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        z-index: 999999;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    section {
+        padding: 60px 0;
+        /* min-height: 100vh;*/
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .contact-area {
+        border-bottom: 1px solid #353C46;
+    }
+
+    .contact-content p {
+        font-size: 15px;
+        margin: 30px 0 60px;
+        position: relative;
+    }
+
+    .contact-content h6 {
+        color: #016bf5;
+        font-size: 15px;
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+
+    .contact-content span {
+        color: #353c47;
+        margin: 0 10px;
+    }
+
+    .contact-social {
+        margin-top: 30px;
+    }
+
+    .contact-social ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .contact-social ul li a {
+        border: 1px solid #8b9199;
+        color: #8b9199;
+        display: inline-block;
+        height: 40px;
+        margin: 0 10px;
+        padding-top: 7px;
+
+        width: 40px;
+    }
+
+    .contact-content img {
+        max-width: 210px;
+    }
+
+    section,
+    footer {
+        background: #000000;
+        color: #868c96;
+    }
+
+    footer p {
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    footer img {
+        width: 44px;
+    }
+
+    @media (min-width: 100px) and (max-width: 1200px) {
+        .category {
+            display: none;
+
+        }
+
+        .category2 {
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    }
+
+
+    @media (min-width: 1200px) {
+        .category2 {
+            display: none;
+        }
+    }
+
+
+
+
+    .nav-bar {
+        height: 10vh;
+    }
+
+    /* .d-flex{
+    position: absolute;
+    right: 2%;
+    top: 13%;
+  } */
+
+
+    .profile {
+        position: absolute;
+        top: 5%;
+        right: 3%;
+    }
+
+    /* .menu-items img {
+  border-radius: 50%;
+} */
+    .login {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 8%;
+    }
+
+    .reg {
+        width: 40%;
+        height: 30px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 15%;
+    }
+
+    .home {
+        width: 40%;
+        height: 35px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 10%;
+    }
+
+    .dropdown1 button {
+        width: 40%;
+        height: 35px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 30%;
+    }
+
+    .dropdown2 button {
+        width: 40%;
+        height: 35px;
+        border-radius: 30px;
+        position: absolute;
+        left: 30%;
+        bottom: 20%;
+    }
+
+    .buy-cart {
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    .buy-cart button {
+        width: 100vw;
+    }
+
+    .card-body a {
+        text-decoration: none;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+    .text-info {
+        font-family: 'Bebas Neue', sans-serif;
+    }
+
+
+
+    .buttonss {
+        display: flex;
+        justify-content: space-evenly;
+
+    }
+
+    .buttonss .btn {
+        width: 43%;
+
+
+    }
+
+
+
+    .prod-outer {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .prod-images {
+        /* border-radius: 0px 0px 3000px 10000px; */
+        border-radius: 0% 50% 50% 0%;
+    }
+
+
+    .prod-outer {
+        display: flex;
+        width: 60%;
+        height: 65vh;
+        background-color: rgb(0, 0, 0);
+    }
+
+    .selller-detail {
+
+        background-color: rgba(0, 0, 0, 0.8);
+
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+
+    }
+
+    .all {
+        display: flex;
+        flex-direction: row;
+
+        justify-content: center;
+
+    }
+
+
+
+    .prod-images {
+        width: 57%;
+
+        background-color: #2a0924;
+
+    }
+
+    /* .prod-images .carousel-item img {
+      
+    } */
+
+    .prod-details {
+        width: 40%;
+
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    @media (max-width: 480px) {
+        .prod-images .carousel-item img {
+            margin-left: 5px;
+
+        }
+
+        .prod-outer {
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            width: 94%;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+
+        }
+
+        .prod-images {
+            width: 100%;
+            height: 50vh;
+            background-color: #2a0924
+        }
+
+        .prod-details {
+            width: 100%;
+
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .prod-images {
+            /* border-radius: 0px 0px 3000px 10000px; */
+            /* border-radius: 0% 50% 50% 0%; */
+            /* border-radius: 50%  50% 0%  0%; */
+            /* border-radius: 0px 0px 3000px 10000px; */
+            border-radius: 50% 0% 50% 0%;
+        }
+
+        .all {
+            display: flex;
+            flex-direction: column;
+
+
+
+        }
+
+        .selller-detail {
+
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 100%;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.4);
+            margin-top: 100px;
+            margin-left: 0px !important;
+
+
+        }
+
+
+
+        .modal .modal-dialog .modal-content .modal-body .map-name {
+            display: flex !important;
+            flex-direction: column;
+        }
+        .modal .modal-dialog .modal-content .modal-body .map-name .selller-detail {
+            width: 100% !important;
+        }
+        .modal .modal-dialog .modal-content .modal-body .map-name #map {
+            margin-top: 10px !important
+            ;
+        }
+
+
+
+    }
+
+
+    @media (min-width: 481px) and (max-width:767px) {}
+
+
+
+    @media (min-width: 768px) and (max-width:991px) {}
+
+
+
+
+    @media (min-width: 992px) and (max-width:1199px) {}
+
+    @media (min-width: 1200px) and (max-width:1919px) {}
+
+
+    @media (min-width: 1920px) {}
+
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+
+
+<body>
+    <div class="nav-bar  ">
+        <div id="menuToggle" class="toggle-menu active">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div>
+            <h4 class="ps-1" style="
+    background-image:linear-gradient(to right top, #731963, #5a1544, #3f122b  );
+    -webkit-background-clip: text;
+     background-clip: text;
+     color: transparent; font-family: 'Pacifico', cursive;">Altos Classified</h4>
+        </div>
+    </div>
+
+    <div class="main">
+        <div id="sideMenu" class="side-menu">
+
+
+
+            <div class="menu-items">
+
+                <div class="home text-light bg-secondary text-center">
+                    <a href="" class="pt-1 mx-2">Home</a>
+                </div>
+                <div class="dropdown2 text-light bg-secondary text-center">
+                    <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Seller
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark text-light bg-secondary text-center"
+                        aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item pt-1 mx-1" href="{% url 'SellRegPage' %}">Register</a></li>
+                        <li><a class="dropdown-item pt-1 mx-1" href="{% url 'SellerLoginPage' %}">Login</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown1 text-light bg-secondary text-center">
+                    <button class="btn btn-secondary " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Buyer
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark text-light bg-secondary text-center"
+                        aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item pt-1 mx-1" href="{% url 'registration' %}">Register</a></li>
+                        <li><a class="dropdown-item pt-1 mx-1" href="{% url 'userLogin' %}">Login</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+        <br><br><br><br><br>
+        <!-- product design -->
+        {% for message in messages %}
+
+        <div class="alert alert-success mx-auto w-50 alert-dismissible fade show mt-4" role="alert">
+            <strong>Success!</strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        <div class="all mx-auto">
+
+            <div class="prod-outer ">
+
+
+                <div class="prod-images">
+
+                    {% for d in data %}
+                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in images %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <center>
+                                    {% if image.image.url %}
+                                    <img class="d-block w-100 mt-5" src="{{ image.image.url }}" alt="Image">
+                                    {% else %}
+                                    <img class="d-block w-100 mt-5" src="{% static 'images/logo.png' %}"
+                                        alt="Default Image">
+                                    {% endif %}
+                                </center>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#imageCarousel" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </div>
+
+
+                </div>
+                <div class="prod-details ">
+                    <div class="mt-4">
+                        <h3 class="text-light mx-5">{{d.Product_Name}}</h3>
+
+                    </div>
+                    <div class="text-secondary mt-2 mx-5">
+                        <!-- <p class="  text-fluid">{{d.Product_Discription}} </p> -->
+                        <hr style="color: white;">
+                    </div>
+
+
+
+                    <div class="text-secondary mt-2 mx-5">
+
+                        <p class="text-fluid">PRODUCT INFO</p>
+                    </div>
+                    <div class="text-secondary mt-2 ps-5">
+
+                        <p class="  text-fluid">{{d.Product_Discription}} </p>
+
+                    </div>
+                    <hr class="mx-5" style="color: white;">
+
+                    <div class="text-secondary mt-2 mx-5">
+
+                        <p class="text-fluid">PRODUCT PRICE</p>
+                    </div>
+                    <div class="mx-5 mt-1  ">
+                        <h4>₹ {{d.Product_Price}}</h4>
+                    </div>
+
+                    <div class="text-secondary mt-2 mx-5">
+
+                        <p class="text-fluid">PRODUCT RATING</p>
+
+                    </div>
+                    <div class=" mx-5 mt-2">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="buttonss mx-auto mt-4 mx-5">
+                        {% if d.stock %}
+                        <button type="button" class="btn btn-outline-dark">
+                            <a style="text-decoration: none; color: #e6e6e6;" href="{% url 'addcart' d.id %}">Add
+                                to cart</a>
+                        </button>
+                        {% else %}
+                        <button type="button" class="btn btn-outline-danger">
+                            <a style="text-decoration: none; color: #e6e6e6;" href="">
+                                Sold Out</a>
+                            {% endif %}
+
+                            <button type="button" class="btn text-light btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                More
+                            </button>
+
+
+
+                    </div>
+                    <br>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+        <br><br><br><br><br>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header " style="border-style: none ; background-color: #191919;">
+                        <h5 class="modal-title text-light" id="exampleModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body  " style="background-color: #191919;">
+
+
+
+                        <div class="d-flex map-name ">
+                            <div class="selller-detail w-25">
+                                <br>
+                                <div class="pro-pic d-flex flex-column align-items-center">
+
+                                    <img class="   " style="border-radius: 50%; width: 150px; height: 150px;"
+                                        src="{{ d.seller.img.url}}">
+                                </div>
+                                <br>
+                                <div class="data  d-flex flex-column align-items-center">
+
+                                    <h4 style="display: flex;" class=" text-secondary "><i
+                                            class="fa-regular fa-user "></i>&nbsp;{{d.seller.user.username}}</h4>
+                                    <h5 style="display: flex;" class="  text-secondary"> <i
+                                            class="fa-solid fa-location-dot"></i>&nbsp;{{d.seller.state}}</h5>
+                                    <h5 style="display: flex;" class="  text-secondary"> <i
+                                            class="fa-regular fa-calendar"></i>&nbsp;{{d.Join_Date}}</h5>
+                                    <br><br>
+                                    <button type="submit" class="btn btn-outline-dark w-100"><a
+                                            style="text-decoration: none; color: #dcf4ff;"
+                                            href="{% url 'OppositeProfile' d.seller.id %}">View Profile</a></button>
+
+
+                                </div>
+
+                            </div>
+
+                            <div id="map"></div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                            {% for review in review %}
+                            <div class="col">
+                                <div class="card h-100" style=" background-color: #000000 ">
+                                    <center>
+                                        <img src="{{review.seller.img.url}}"
+                                            style="border-radius: 50%; width: 150px; height: 150px;"
+                                            class="card-img-top mt-2">
+                                    </center>
+                                    <div class="card-body text-center text-secondary">
+                                        <h5 class="card-title">{{review.seller.user.username}}</h5>
+                                        <p class="card-text">"{{review.review}}"
+                                        </p>
+                                    </div>
+                                    <div class="card-footer text-center text-secondary">
+                                        <h2 class="text-muted"> {% if review.star >= 1 %}
+                                            <span style="font-size:20px;" class="star checked ">&#9733;</span>
+                                            {% endif %}
+
+                                            {% if review.star >= 2 %}
+                                            <span style="font-size:20px;" class="star checked">&#9733;</span>
+                                            {% endif %}
+
+                                            {% if review.star >= 3 %}
+                                            <span style="font-size:20px;" class="star checked">&#9733;</span>
+                                            {% endif %}
+
+                                            {% if review.star >= 4 %}
+                                            <span style="font-size:20px;" class="star checked">&#9733;</span>
+                                            {% endif %}
+
+                                            {% if review.star >= 5 %}
+                                            <span style="font-size:20px;" class="star checked">&#9733;</span>
+                                            {% endif %}
+                                            </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer  " style="border-style: none ; background-color: #191919;">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+
+
+    <!-- 
+        {% if latitude is not None and longitude is not None %}
+        <p>Latitude: {{ latitude }}</p>
+        <p>Longitude: {{ longitude }}</p>
+
+     
+        <script>
+                <div id="map"></div>
+            var map = L.map('map').setView([{{ 11.85713677753996 }}, { { 75.39454131860758 } }], 10);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            L.marker([{{ 11.85713677753996 }}, {{ 75.39454131860758 }}]).addTo(map);
+        </script>
+        {% else %}
+        <p>No loc</p>
+        {% endif %} -->
+
+
+
+
+
+
+
+    <section class="contact-area" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="contact-content text-center">
+                        <p>China |
+                            India |
+                            United States |
+                            Indonesia |
+                            Pakistan |
+                            Brazil |
+                            Nigeria |
+                            Bangladesh |
+                            Russia |
+                            Mexico </p>
+
+                        <div class="contact-social">
+                            <ul>
+                                <li><a class="hover-target" href=""><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-instagram"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-whatsapp"></i></a></li>
+                                <li><a class="hover-target" href=""><i class="fab fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>Copyright &copy; 2023 Altos Technologies</p>
+        </footer>
+    </section>
+
+    </div>
+
+    <script>
+        var map = L.map('map').setView([10.8505, 76.2711], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        var marker;
+        map.on('click', function (e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('latitude').value = e.latlng.lat;
+            document.getElementById('longitude').value = e.latlng.lng;
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleMenu = document.getElementById("menuToggle");
+            const sideMenu = document.getElementById("sideMenu");
+            const content = document.querySelector(".content");
+            const bars = document.querySelectorAll(".bar");
+            const menuItems = document.querySelectorAll(".menu-items .item");
+
+
+            const isMenuOpen = localStorage.getItem("isMenuOpen");
+
+
+            if (isMenuOpen === "true") {
+                sideMenu.classList.add("resize");
+                content.classList.add("resize");
+                toggleMenu.classList.add("active");
+            }
+
+            toggleMenu.addEventListener("click", () => {
+                sideMenu.classList.toggle("resize");
+                content.classList.toggle("resize");
+                toggleMenu.classList.toggle("active");
+
+
+                localStorage.setItem("isMenuOpen", sideMenu.classList.contains("resize"));
+            });
+
+            bars.forEach((bar) => {
+                bar.addEventListener("transitionend", () => {
+                    bar.classList.remove("anim-bar");
+                });
+            });
+
+
+            setTimeout(() => {
+                bars.forEach((bar) => {
+                    bar.classList.add("anim-bar");
+                });
+            }, 1000);
+
+
+            menuItems.forEach(function (item) {
+                item.addEventListener("click", function (event) {
+                    event.preventDefault();
+
+                    menuItems.forEach(function (menuItem) {
+                        menuItem.classList.remove("active");
+                    });
+
+                    this.classList.add("active");
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+ 
+ 
+  <h2>Uploaded Products</h2>
+  <ul>
+    {% for product in products %}
+      <li>
+        {{ product.Product_Name }} - {{ product.Product_Description }} - {{ product.Product_Price }}
+       
+      </li>
+    {% endfor %}
+  </ul>
+ 
